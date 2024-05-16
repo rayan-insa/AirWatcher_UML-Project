@@ -20,6 +20,9 @@ public:
     // Constructeur avec paramètres
     Fournisseur(const string& nom);
 
+    // Destructeur par défaut
+    ~Fournisseur();
+
     // Getters
     string getNom() const;
     int getNbCommandes() const;

@@ -42,7 +42,12 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-
+    
+    Utilisateur ( );
+    // Mode d'emploi : constructeur par défaut de Utilisateur
+    //
+    // Contrat :
+    
     Utilisateur ( string login );
     // Mode d'emploi : constructeur par défaut de Gouvernement
     //

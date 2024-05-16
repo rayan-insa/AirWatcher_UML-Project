@@ -46,6 +46,13 @@ vector<Fournisseur> Model::getListeFournisseurs() const {
     return listeFournisseurs;
 }
 
+Model::Model (  )
+{
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <Model>" << endl;
+#endif
+}
+
 Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs )
  : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs)
 {

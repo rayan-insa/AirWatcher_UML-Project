@@ -27,6 +27,13 @@ string Utilisateur::getLogin()
     return this->login;
 }
 
+Utilisateur::Utilisateur ( )
+{
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <Utilisateur>" << endl;
+#endif
+}
+
 Utilisateur::Utilisateur ( string login )
 {
 #ifdef MAP

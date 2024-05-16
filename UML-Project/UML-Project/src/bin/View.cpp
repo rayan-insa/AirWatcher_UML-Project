@@ -41,6 +41,11 @@ void View::afficherVue() const
     cout << this->texteVueCourante << endl;
 }
 
+View::View ( ) {
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <View>" << endl;
+#endif
+}
 
 View::View ( string texteVueCourante, int entreeUtilisateur, Controller controller )
  : texteVueCourante(texteVueCourante), entreeUtilisateur(entreeUtilisateur), controller(controller)

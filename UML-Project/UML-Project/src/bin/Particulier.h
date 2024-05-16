@@ -44,6 +44,11 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
+    Particulier ( );
+    // Mode d'emploi : constructeur par défaut de Particulier
+    //
+    // Contrat :
+    
     Particulier ( string login, int points, bool fiable );
     // Mode d'emploi : constructeur par défaut de Gouvernement
     //

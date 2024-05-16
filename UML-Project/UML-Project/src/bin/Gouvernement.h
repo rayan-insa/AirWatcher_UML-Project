@@ -42,6 +42,7 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
+    Gouvernement ( );
     Gouvernement ( string login );
     // Mode d'emploi : constructeur par défaut de Gouvernement
     //

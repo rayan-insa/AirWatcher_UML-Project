@@ -53,8 +53,13 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Controller ( Model model, View vue );
+    Controller ( );
     // Mode d'emploi : constructeur par défaut de Controller
+    //
+    // Contrat :
+
+    Controller ( Model model, View vue );
+    // Mode d'emploi : constructeur de Controller
     //
     // Contrat :
 

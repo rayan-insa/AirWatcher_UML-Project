@@ -1,19 +1,19 @@
 /*************************************************************************
-                Gouvernement  -  Manipule le gouvernement
+                Utilisateur  -  Manipule les Utilisateur
                              -------------------
     début                : 17/01/2024
     copyright            : (C) 2021 by Chikhi Djalil & Thabet Yasmine  
                             & Cavagna Justine  & Hanader Rayan 
 *************************************************************************/
 
-//---------- Réalisation de la classe <Gouvernement> (fichier Gouvernement.cpp) ------------
+//---------- Réalisation de la classe <Utilisateur> (fichier Utilisateur.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-
+#include <string>
 //------------------------------------------------------ Include personnel
-#include "Gouvernement.h"
+#include "Utilisateur.h"
 
 using namespace std;
 
@@ -21,19 +21,25 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-Gouvernement::Gouvernement ( string login ) : Utilisateur ( login )
+
+string Utilisateur::getLogin()
+{
+    return this->login;
+}
+
+Utilisateur::Utilisateur ( string login )
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Gouvernement>" << endl;
+    cout << "Appel au constructeur de <Utilisateur>" << endl;
 #endif
 
-this->login = login;
-} //----- Fin de Gouvernement
+    this->login = login;
+} //----- Fin de Utilisateur
 
 
-Gouvernement::~Gouvernement ()
+Utilisateur::~Utilisateur ()
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Gouvernement>" << endl;
+    cout << "Appel au destructeur de <Utilisateur>" << endl;
 #endif
-} //----- Fin de ~Gouvernement
+} //----- Fin de ~Utilisateur

@@ -1,39 +1,45 @@
 /*************************************************************************
-                Gouvernement  -  Manipule le gouvernement
+                Controller  -  Manipule le Controller
                              -------------------
     début                : 17/01/2024
     copyright            : (C) 2021 by Chikhi Djalil & Thabet Yasmine  
                             & Cavagna Justine  & Hanader Rayan 
 *************************************************************************/
 
-//---------- Réalisation de la classe <Gouvernement> (fichier Gouvernement.cpp) ------------
+//---------- Réalisation de la classe <Controller> (fichier Controller.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-
+#include <string>
 //------------------------------------------------------ Include personnel
-#include "Gouvernement.h"
-
 using namespace std;
-
+#include "Controller.h"
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
 
-Gouvernement::Gouvernement ( string login ) : Utilisateur ( login )
+// Getters
+Model Controller::getModel() const {
+    return model;
+}
+
+View Controller::getView() const {
+    return vue;
+}
+
+Controller::Controller ( Model model, View vue )
+ : model(model), vue(vue)
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Gouvernement>" << endl;
+    cout << "Appel au constructeur de <Controller>" << endl;
 #endif
-
-this->login = login;
-} //----- Fin de Gouvernement
+} //----- Fin de Controller
 
 
-Gouvernement::~Gouvernement ()
+Controller::~Controller ()
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Gouvernement>" << endl;
+    cout << "Appel au destructeur de <Controller>" << endl;
 #endif
-} //----- Fin de ~Gouvernement
+} //----- Fin de ~Controller

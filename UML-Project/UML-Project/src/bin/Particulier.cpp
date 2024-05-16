@@ -1,19 +1,19 @@
 /*************************************************************************
-                Gouvernement  -  Manipule le gouvernement
+                Particulier  -  Manipule les Particuliers
                              -------------------
     début                : 17/01/2024
     copyright            : (C) 2021 by Chikhi Djalil & Thabet Yasmine  
                             & Cavagna Justine  & Hanader Rayan 
 *************************************************************************/
 
-//---------- Réalisation de la classe <Gouvernement> (fichier Gouvernement.cpp) ------------
+//---------- Réalisation de la classe <Particulier> (fichier Particulier.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-
+#include <string>
 //------------------------------------------------------ Include personnel
-#include "Gouvernement.h"
+#include "Particulier.h"
 
 using namespace std;
 
@@ -21,19 +21,30 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-Gouvernement::Gouvernement ( string login ) : Utilisateur ( login )
+Particulier::Particulier ( string login, int points, bool fiable ) : Utilisateur ( login )
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Gouvernement>" << endl;
+    cout << "Appel au constructeur de <Particulier>" << endl;
 #endif
 
 this->login = login;
-} //----- Fin de Gouvernement
+this->points = points;
+this->fiable = fiable;
+} //----- Fin de Particulier
 
+int Particulier::getPoints()
+{
+    return this->points;
+}
 
-Gouvernement::~Gouvernement ()
+bool Particulier::getFiable()
+{
+    return this->fiable;
+}
+
+Particulier::~Particulier ()
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Gouvernement>" << endl;
+    cout << "Appel au destructeur de <Particulier>" << endl;
 #endif
-} //----- Fin de ~Gouvernement
+} //----- Fin de ~Particulier

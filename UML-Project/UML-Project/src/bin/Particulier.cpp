@@ -35,8 +35,8 @@ Particulier::Particulier ( string login, int points, bool fiable ) : Utilisateur
 #endif
 
 this->login = login;
-this->points = points;
-this->fiable = fiable;
+this->points = 0;
+this->fiable = true;
 } //----- Fin de Particulier
 
 int Particulier::getPoints()

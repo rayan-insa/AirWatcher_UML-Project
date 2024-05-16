@@ -16,8 +16,7 @@
 #include <string>
 //---------------------------------------------------Includes personnels
 using namespace std;
-#include "Model.cpp"
-#include "Controller.cpp"
+#include "Controller.h"
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -53,7 +52,12 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    View ( string texteVueCourante, int entreeUtilisateur, Model model, Controller controller );
+    View ( );
+    // Mode d'emploi : constructeur par défaut de View
+    //
+    // Contrat :
+
+    View ( string texteVueCourante, int entreeUtilisateur, Controller controller );
     // Mode d'emploi : constructeur par défaut de View
     //
     // Contrat :
@@ -71,8 +75,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 string texteVueCourante;
 int entreeUtilisateur;
-Model model;
-Controller controller
+Controller controller;
 };
 
 #endif // View_H

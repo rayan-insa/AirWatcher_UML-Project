@@ -16,13 +16,12 @@
 #include <vector>
 //---------------------------------------------------Includes personnels
 using namespace std; 
-#include "Gouvernement.cpp"
-#include "Particulier.cpp"
-#include "Capteur.cpp"
-#include "Cleaner.cpp"
-#include "Fournisseur.cpp"
-#include "View.cpp"
-#include "Controller.cpp"
+#include "Gouvernement.h"
+#include "Particulier.h"
+#include "Capteur.h"
+#include "Cleaner.h"
+#include "Fournisseur.h"
+#include "Controller.h"
 
 
 //------------------------------------------------------------------ Types
@@ -41,31 +40,31 @@ public:
 //----------------------------------------------------- Méthodes publiques
 
 
-    View GetVue() const;
+    View getVue() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet View associé au modèle.
 
-    Controller GetController() const;
+    Controller getController() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet Controller associé au modèle.
 
-    Gouvernement GetGouvernement() const;
+    Gouvernement getGouvernement() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet Gouvernement associé au modèle.
 
-    vector<Particulier> GetListeParticuliers() const;
+    vector<Particulier> getListeParticuliers() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Particulier associés au modèle.
 
-    vector<Capteur> GetListeCapteurs() const;
+    vector<Capteur> getListeCapteurs() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Capteur associés au modèle.
 
-    vector<Cleaner> GetListeCleaners() const;
+    vector<Cleaner> getListeCleaners() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Cleaner associés au modèle.
 
-    vector<Fournisseur> GetListeFournisseurs() const;
+    vector<Fournisseur> getListeFournisseurs() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Fournisseur associés au modèle.
 
@@ -73,7 +72,12 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Model ( View vue, Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
+    Model ( );
+    // Mode d'emploi : constructeur par défaut de Model
+    //
+    // Contrat :
+
+    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
     // Mode d'emploi : constructeur par défaut de Model
     //
     // Contrat :
@@ -89,13 +93,12 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-View vue;
 Controller controller;
 Gouvernement gouv;
 vector<Particulier> listeParticuliers;
 vector<Capteur> listeCapteurs;
 vector<Cleaner> listeCleaners;
-vector<Fournisseur> listeFournisseurs
+vector<Fournisseur> listeFournisseurs;
 };
 
 #endif // Model_H

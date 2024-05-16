@@ -15,11 +15,11 @@ public:
 
 	~Capteur();
 
-	long getLatitude();
+	long getLatitude() const;
 
-	long getLongitude();
+	long getLongitude() const;
 
-	bool getDefaillant();
+	bool getDefaillant() const;
 
 	void setLatitude(long lat);
 

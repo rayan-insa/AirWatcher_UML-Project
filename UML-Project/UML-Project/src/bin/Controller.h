@@ -16,8 +16,8 @@
 #include <string>
 //---------------------------------------------------Includes personnels
 using namespace std;
-#include "Model.cpp"
-#include "View.cpp"
+#include "Model.h"
+#include "View.h"
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -37,14 +37,14 @@ public:
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
 
-    Model GetModel() const;
+    Model getModel() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet Model associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.
     // Elle ne prend aucun paramètre.
     // Elle renvoie l'objet Model associé au Controller.
 
-    View GetView() const;
+    View getView() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet View associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.
@@ -53,12 +53,17 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Controller ( Model model, View vue );
+    Controller ( );
     // Mode d'emploi : constructeur par défaut de Controller
     //
     // Contrat :
 
-    virtual ~Controller ( );
+    Controller ( Model model, View vue );
+    // Mode d'emploi : constructeur de Controller
+    //
+    // Contrat :
+
+    ~Controller ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -70,7 +75,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 Model model;
-View vue
+View vue;
 };
 
 #endif // Controller_H

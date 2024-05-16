@@ -21,6 +21,13 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
+Gouvernement::Gouvernement ( )
+{
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <Gouvernement>" << endl;
+#endif
+}
+
 Gouvernement::Gouvernement ( string login ) : Utilisateur ( login )
 {
 #ifdef MAP

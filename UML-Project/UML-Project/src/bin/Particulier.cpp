@@ -21,6 +21,13 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
+Particulier::Particulier ( )
+{
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <Particulier>" << endl;
+#endif
+}
+
 Particulier::Particulier ( string login, int points, bool fiable ) : Utilisateur ( login )
 {
 #ifdef MAP

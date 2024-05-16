@@ -37,5 +37,5 @@ void Mesure::setDate(time_t newDate) {
 
 // Méthode pour définir la valeur de la mesure
 void Mesure::setValeur(long val) {
-    valeur = newVal;
+    valeur = val;
 }

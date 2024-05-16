@@ -25,7 +25,6 @@ all: $(TARGET)
 # Rule to link object files and create the executable
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
-	@$(MAKE) clean_o
 
 # Rules to compile source files into object files with dependencies on headers
 Attribut.o: Attribut.cpp Attribut.h
@@ -65,9 +64,6 @@ main.o: main.cpp Attribut.h Capteur.h Fournisseur.h Gouvernement.h Mesure.h \
                  Model.h View.h Particulier.h Controller.h Cleaner.h Utilisateur.h
 	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
 
-# Rule to clean up object files
-clean_o:
-	rm -f $(OBJS)
 
 # Phony targets
 .PHONY: all clean_o

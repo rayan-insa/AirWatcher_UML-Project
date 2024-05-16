@@ -1,7 +1,25 @@
-﻿#include <iostream>
-using namespace std;
+﻿/*************************************************************************
+                Capteur  -  Manipule les capteurs
+                             -------------------
+    début                : 16/05/2024
+    copyright            : (C) 2024 by Hanader Rayan & Dugast Eleonore  
+                            & Cavagna Justine  & Soulet AUdrey 
+*************************************************************************/
 
+//---------- Réalisation de la classe <Capteur> (fichier Capteur.cpp) ------------
+
+//---------------------------------------------------------------- INCLUDE
+
+//-------------------------------------------------------- Include système
+#include <iostream>
+
+//------------------------------------------------------ Include personnel
+using namespace std;
 #include "Capteur.h"
+
+//----------------------------------------------------------------- PUBLIC
+
+//----------------------------------------------------- Méthodes publiques
 
 // Constructeur par défaut
 Capteur::Capteur() {
@@ -22,6 +40,9 @@ Capteur::~Capteur() {
     // Code du destructeur, s'il est nécessaire
 }
 
+
+//---------------------------------------------------------- Getters
+
 // Méthode pour obtenir la latitude
 long Capteur::getLatitude() const {
     return latitude;
@@ -36,6 +57,8 @@ long Capteur::getLongitude() const {
 bool Capteur::getDefaillant() const {
     return defaillant;
 }
+
+//---------------------------------------------------------- Setters
 
 // Méthode pour définir la latitude
 void Capteur::setLatitude(long lat) {

@@ -37,14 +37,14 @@ public:
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
 
-    Model GetModel() const;
+    Model getModel() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet Model associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.
     // Elle ne prend aucun paramètre.
     // Elle renvoie l'objet Model associé au Controller.
 
-    View GetView() const;
+    View getView() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet View associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.

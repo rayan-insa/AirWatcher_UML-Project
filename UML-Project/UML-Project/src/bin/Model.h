@@ -41,31 +41,31 @@ public:
 //----------------------------------------------------- Méthodes publiques
 
 
-    View GetVue() const;
+    View getVue() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet View associé au modèle.
 
-    Controller GetController() const;
+    Controller getController() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet Controller associé au modèle.
 
-    Gouvernement GetGouvernement() const;
+    Gouvernement getGouvernement() const;
     // Mode d'emploi :
     // Cette méthode retourne l'objet Gouvernement associé au modèle.
 
-    vector<Particulier> GetListeParticuliers() const;
+    vector<Particulier> getListeParticuliers() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Particulier associés au modèle.
 
-    vector<Capteur> GetListeCapteurs() const;
+    vector<Capteur> getListeCapteurs() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Capteur associés au modèle.
 
-    vector<Cleaner> GetListeCleaners() const;
+    vector<Cleaner> getListeCleaners() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Cleaner associés au modèle.
 
-    vector<Fournisseur> GetListeFournisseurs() const;
+    vector<Fournisseur> getListeFournisseurs() const;
     // Mode d'emploi :
     // Cette méthode retourne la liste des objets Fournisseur associés au modèle.
 

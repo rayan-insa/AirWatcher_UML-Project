@@ -1,14 +1,41 @@
+/*************************************************************************
+                Cleaner  -  Classe des cleaners
+                             -------------------
+    début                : 16/05/2024
+    copyright            : (C) 2024 by Hanader Rayan & Dugast Eléonore  
+                            & Cavagna Justine  & Soulet Audrey 
+*************************************************************************/
+
+//---------- Interface de la classe <Cleaner> (fichier Cleaner.h) ----------------
 #ifndef CLEANER_H
 #define CLEANER_H
 
+//--------------------------------------------------- Interfaces utilisées
+
+//-------------------------------------------------------- Include système
 #include <string>
 #include <ctime>
 #include "Fournisseur.h"
 
+//------------------------------------------------------ Include personnel
+
 using namespace std;
 
+//------------------------------------------------------------------ Types
+
+//------------------------------------------------------------------------
+// Rôle de la classe <Cleaner>
+//
+//
+//------------------------------------------------------------------------
+
 class Cleaner {
+
+//------------------------------------------------------------------ PRIVE
 private:
+    //----------------------------------------------------- Méthodes protégées
+
+    //----------------------------------------------------- Attributs protégés
     string id;
     long latitude;
     long longitude;
@@ -16,29 +43,72 @@ private:
     time_t timestamp_stop;
     Fournisseur fournisseur;
 
+//----------------------------------------------------------------- PUBLIC
 public:
-    // Constructeurs
+
+    //-------------------------------------------- Constructeurs - destructeur
+
     Cleaner();
+    // Mode d'emploi : constructeur par défaut de Cleaner
+
     Cleaner(const string& id, long latitude, long longitude, const time_t timestamp_start, const time_t timestamp_stop, Fournisseur fournisseur);
+    // Mode d'emploi : constructeur paramétré de Cleaner
 
-    // Destructeur
     ~Cleaner();
+    // Mode d'emploi : destructeur par défaut de Cleaner
 
-    // Getters
+    //----------------------------------------------------- Méthodes publiques
+
+    // -------------------------------------------- Getters
+    string getId() const;
+    // Mode d'emploi : 
+    // Obtient l'id du cleaner
+    
     long getLatitude() const;
-    long getLongitude() const;
-    time_t getTimestampStart() const;
-    time_t getTimestampStop() const;
-    Fournisseur getFournisseur() const;
-    string getId() const; // Nouvelle méthode pour obtenir l'ID
+    // Mode d'emploi : 
+    // Obtient la latitude du cleaner
 
-    // Setters
+    long getLongitude() const;
+    // Mode d'emploi : 
+    // Obtient la longitude du cleaner
+
+    time_t getTimestampStart() const;
+    // Mode d'emploi : 
+    // Obtient le temps de début du cleaner
+
+    time_t getTimestampStop() const;
+    // Mode d'emploi : 
+    // Obtient le temps de fin du cleaner
+
+    Fournisseur getFournisseur() const;
+    // Mode d'emploi : 
+    // Obtient le fournisseur du cleaner
+
+
+    // -------------------------------------------- Setters
     void setId(const string& id);
+    // Mode d'emploi :
+    // Définit l'id du cleaner
     void setLatitude(long latitude);
+    // Mode d'emploi :
+    // Définit la latitude du cleaner
     void setLongitude(long longitude);
+    // Mode d'emploi :
+    // Définit la longitude du cleaner
     void setTimestampStart(const time_t timestamp_start);
+    // Mode d'emploi :
+    // Définit le temps de début du cleaner
     void setTimestampStop(const time_t timestamp_stop);
+    // Mode d'emploi :
+    // Définit le temps de fin du cleaner
     void setFournisseur(Fournisseur fournisseur);
+    // Mode d'emploi :
+    // Définit le fournisseur du cleaner
+
+    // -------------------------------------------- Methodes
+    void afficherInfos() const;
+    // Mode d'emploi :
+    // Affiche les informations du fournisseur
 };
 
 #endif // CLEANER_H

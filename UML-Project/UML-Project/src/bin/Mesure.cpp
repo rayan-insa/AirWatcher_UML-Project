@@ -1,7 +1,25 @@
-#include <iostream>
-using namespace std;
+/*************************************************************************
+                Mesure  -  Manipule les mesures
+                             -------------------
+    début                : 16/05/2024
+    copyright            : (C) 2024 by Hanader Rayan & Dugast Eleonore  
+                            & Cavagna Justine  & Soulet AUdrey 
+*************************************************************************/
 
+//---------- Réalisation de la classe <Mesure> (fichier Mesure.cpp) ------------
+
+//---------------------------------------------------------------- INCLUDE
+
+//-------------------------------------------------------- Include système
+#include <iostream>
+
+//------------------------------------------------------ Include personnel
+using namespace std;
 #include "Mesure.h"
+
+//----------------------------------------------------------------- PUBLIC
+
+//----------------------------------------------------- Méthodes publiques
 
 // Constructeur par défaut
 Mesure::Mesure() {
@@ -17,8 +35,9 @@ Mesure::Mesure(time_t date, long val) {
 
 // Destructeur
 Mesure::~Mesure() {
-    // Code du destructeur, s'il est nécessaire
 }
+
+//---------------------------------------------------------- Getters
 
 // Méthode pour obtenir la date de la mesure
 time_t Mesure::getDate() const {
@@ -29,6 +48,8 @@ time_t Mesure::getDate() const {
 long Mesure::getValeur() const {
     return valeur;
 }
+
+//---------------------------------------------------------- Setters
 
 // Méthode pour définir la date de la mesure
 void Mesure::setDate(time_t newDate) {

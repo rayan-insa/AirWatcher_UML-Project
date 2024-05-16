@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 //------------------------------------------------------ Include personnel
 
 using namespace std;
@@ -82,13 +83,11 @@ public:
     // Mode d'emploi :
     // Définit l'historique de commandes du fournisseur
 
-
-    // Méthode pour ajouter une commande à l'historique
+    // -------------------------------------------- Methodes
     void ajouterCommande(const string& commande);
     // Mode d'emploi :
     // Ajoute une commande à l'historique du fournisseur
 
-    // Affichage des informations du fournisseur
     void afficherInfos() const;
     // Mode d'emploi :
     // Affiche les informations du fournisseur

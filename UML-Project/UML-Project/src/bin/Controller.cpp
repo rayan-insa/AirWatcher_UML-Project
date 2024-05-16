@@ -28,6 +28,13 @@ View Controller::getView() const {
     return vue;
 }
 
+Controller::Controller (  )
+{
+#ifdef MAP
+    cout << "Appel au constructeur par défault de <Controller>" << endl;
+#endif
+}
+
 Controller::Controller ( Model model, View vue ) : model(model), vue(vue)
 {
 #ifdef MAP

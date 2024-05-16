@@ -52,6 +52,11 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
+    View ( );
+    // Mode d'emploi : constructeur par défaut de View
+    //
+    // Contrat :
+
     View ( string texteVueCourante, int entreeUtilisateur, Controller controller );
     // Mode d'emploi : constructeur par défaut de View
     //

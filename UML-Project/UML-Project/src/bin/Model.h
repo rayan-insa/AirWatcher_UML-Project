@@ -72,6 +72,11 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
+    Model ( );
+    // Mode d'emploi : constructeur par défaut de Model
+    //
+    // Contrat :
+
     Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
     // Mode d'emploi : constructeur par défaut de Model
     //

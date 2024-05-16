@@ -14,11 +14,11 @@ public:
 
 	~Attribut();
 
-	string getAttributID();
+	string getAttributID() const;
 
-	string getUnit();
+	string getUnit() const;
 
-	string getDescription();
+	string getDescription() const;
 
 	void setAttributID(string ID);
 

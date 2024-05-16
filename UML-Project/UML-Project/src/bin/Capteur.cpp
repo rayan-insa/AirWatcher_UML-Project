@@ -23,17 +23,17 @@ Capteur::~Capteur() {
 }
 
 // Méthode pour obtenir la latitude
-long Capteur::getLatitude() {
+long Capteur::getLatitude() const {
     return latitude;
 }
 
 // Méthode pour obtenir la longitude
-long Capteur::getLongitude() {
+long Capteur::getLongitude() const {
     return longitude;
 }
 
 // Méthode pour vérifier si le capteur est défaillant
-bool Capteur::getDefaillant() {
+bool Capteur::getDefaillant() const {
     return defaillant;
 }
 

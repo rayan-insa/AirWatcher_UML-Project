@@ -16,6 +16,7 @@
 #include <vector>
 //---------------------------------------------------Includes personnels
 using namespace std; 
+
 #include "Gouvernement.h"
 #include "Particulier.h"
 #include "Capteur.h"

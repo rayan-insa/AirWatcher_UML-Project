@@ -1,9 +1,9 @@
 /*************************************************************************
-                        Gouvernement  -  Manipule le gouvernement
+                Gouvernement  -  Manipule le gouvernement
                              -------------------
-    début                : 17/01/2024
-    copyright            : (C) 2021 by Chikhi Djalil & Thabet Yasmine  
-                            & Cavagna Justine  & Hanader Rayan 
+    début                : 16/05/2024
+    copyright            : (C) 2024 by Hanader Rayan & Dugast Eleonore  
+                            & Cavagna Justine  & Soulet Audrey 
 *************************************************************************/
 
 //---------- Interface de la classe <Gouvernement> (fichier Gouvernement.h) ----------------

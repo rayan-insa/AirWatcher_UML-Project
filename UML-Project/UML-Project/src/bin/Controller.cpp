@@ -20,11 +20,11 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 // Getters
-Model Controller::getModel() const {
+shared_ptr<Model>  Controller::getModel() const {
     return model;
 }
 
-View Controller::getView() const {
+shared_ptr<View>  Controller::getView() const {
     return vue;
 }
 
@@ -35,7 +35,7 @@ Controller::Controller (  )
 #endif
 }
 
-Controller::Controller ( Model model, View vue ) : model(model), vue(vue)
+Controller::Controller ( shared_ptr<Model>  model, shared_ptr<View>  vue ) : model(model), vue(vue)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Controller>" << endl;

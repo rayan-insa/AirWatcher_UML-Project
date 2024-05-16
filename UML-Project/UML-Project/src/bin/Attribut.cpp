@@ -14,15 +14,15 @@ Attribut::Attribut(string ID, string un, string descr) {
 	description = descr;
 }
 
-string Attribut::getAttributID() {
+string Attribut::getAttributID() const {
 	return attributID;
 }
 
-string Attribut::getUnit() {
+string Attribut::getUnit() const {
 	return unit;
 }
 
-string Attribut::getDescription() {
+string Attribut::getDescription() const {
 	return description;
 }
 

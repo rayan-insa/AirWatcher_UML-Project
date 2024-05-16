@@ -21,12 +21,12 @@ Mesure::~Mesure() {
 }
 
 // Méthode pour obtenir la date de la mesure
-time_t Mesure::getDate() {
+time_t Mesure::getDate() const {
     return date;
 }
 
 // Méthode pour obtenir la valeur de la mesure
-long Mesure::getValeur() {
+long Mesure::getValeur() const {
     return valeur;
 }
 

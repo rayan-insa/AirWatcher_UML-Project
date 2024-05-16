@@ -14,9 +14,9 @@ public:
 
 	~Mesure();
 
-	time_t getDate();
+	time_t getDate() const;
 
-	long getValeur();
+	long getValeur() const ;
 
 	void setDate(time_t newDate);
 

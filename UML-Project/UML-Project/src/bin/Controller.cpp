@@ -29,11 +29,14 @@ View Controller::getView() const {
 }
 
 Controller::Controller ( Model model, View vue )
- : model(model), vue(vue)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Controller>" << endl;
 #endif
+
+this->model = model;
+this->vue = vue;
+
 } //----- Fin de Controller
 
 

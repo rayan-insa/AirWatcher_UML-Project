@@ -16,8 +16,8 @@
 #include <string>
 //---------------------------------------------------Includes personnels
 using namespace std;
-#include "Model.cpp"
-#include "View.cpp"
+#include "Model.h"
+#include "View.h"
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -58,7 +58,7 @@ public:
     //
     // Contrat :
 
-    virtual ~Controller ( );
+    ~Controller ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -70,7 +70,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 Model model;
-View vue
+View vue;
 };
 
 #endif // Controller_H

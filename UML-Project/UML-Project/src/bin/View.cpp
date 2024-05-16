@@ -35,15 +35,15 @@ void View::setTexteVueCourante(string texteVueCourante)
     this->texteVueCourante = texteVueCourante;
 }
 
-void afficherVue() const
+void View::afficherVue() const
 {   
     //A IMPLEMENTER
     cout << this->texteVueCourante << endl;
 }
 
 
-View::View ( string texteVueCourante, int entreeUtilisateur, Model model, Controller controller )
- : texteVueCourante(texteVueCourante), entreeUtilisateur(entreeUtilisateur), model(model), controller(controller)
+View::View ( string texteVueCourante, int entreeUtilisateur, Controller controller )
+ : texteVueCourante(texteVueCourante), entreeUtilisateur(entreeUtilisateur), controller(controller)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <View>" << endl;

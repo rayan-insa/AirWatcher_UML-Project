@@ -16,13 +16,12 @@
 #include <vector>
 //---------------------------------------------------Includes personnels
 using namespace std; 
-#include "Gouvernement.cpp"
-#include "Particulier.cpp"
-#include "Capteur.cpp"
-#include "Cleaner.cpp"
-#include "Fournisseur.cpp"
-#include "View.cpp"
-#include "Controller.cpp"
+#include "Gouvernement.h"
+#include "Particulier.h"
+#include "Capteur.h"
+#include "Cleaner.h"
+#include "Fournisseur.h"
+#include "Controller.h"
 
 
 //------------------------------------------------------------------ Types
@@ -73,7 +72,7 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Model ( View vue, Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
+    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
     // Mode d'emploi : constructeur par défaut de Model
     //
     // Contrat :
@@ -89,13 +88,12 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-View vue;
 Controller controller;
 Gouvernement gouv;
 vector<Particulier> listeParticuliers;
 vector<Capteur> listeCapteurs;
 vector<Cleaner> listeCleaners;
-vector<Fournisseur> listeFournisseurs
+vector<Fournisseur> listeFournisseurs;
 };
 
 #endif // Model_H

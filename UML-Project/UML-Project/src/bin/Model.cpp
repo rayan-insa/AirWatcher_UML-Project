@@ -21,9 +21,6 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-View Model::getView() const {
-    return vue;
-}
 
 Controller Model::getController() const {
     return controller;
@@ -49,8 +46,8 @@ vector<Fournisseur> Model::getListeFournisseurs() const {
     return listeFournisseurs;
 }
 
-Model::Model ( View vue, Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs )
- : vue(vue), controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs)
+Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs )
+ : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Model>" << endl;

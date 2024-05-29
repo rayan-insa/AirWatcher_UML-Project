@@ -57,7 +57,7 @@ Model::Model (  )
 #ifdef MAP
     cout << "Appel au constructeur par défault de <Model>" << endl;
 #endif
-    controller = Controller();
+    
     gouv = Gouvernement();
     ifstream file("dataset/users.csv");
 
@@ -217,17 +217,6 @@ Model::Model (  )
 
 }
 
-<<<<<<< HEAD
-=======
-Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures)
- : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs), listeMesures(listeMesures)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <Model>" << endl;
-#endif
-} //----- Fin de Model
-
->>>>>>> e79c610eb5521d56662439e04c8e4ddc9b90ccf2
 
 Model::~Model ()
 {

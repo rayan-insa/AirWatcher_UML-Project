@@ -24,12 +24,7 @@ using namespace std;
 #include "Capteur.h"
 #include "Cleaner.h"
 #include "Fournisseur.h"
-<<<<<<< HEAD
-=======
-#include "Controller.h"
 #include "Mesure.h"
->>>>>>> e79c610eb5521d56662439e04c8e4ddc9b90ccf2
-
 
 //------------------------------------------------------------------ Types
 
@@ -99,13 +94,6 @@ public:
     //
     // Contrat :
 
-<<<<<<< HEAD
-=======
-    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures );
-    // Mode d'emploi : constructeur par défaut de Model
-    //
-    // Contrat :
->>>>>>> e79c610eb5521d56662439e04c8e4ddc9b90ccf2
 
     virtual ~Model ( );
     // Mode d'emploi :

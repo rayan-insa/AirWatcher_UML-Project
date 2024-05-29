@@ -250,6 +250,7 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
     // Retourne : un vecteur de capteurs qui contiennent des mesures à la date donnée.
     vector<Capteur> liste_capteurs_date;
     for (unsigned int i = 0; i < listeMesures.size(); i++){
+        printf("date : %ld\n", date);
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && find(liste_capteurs_date.begin(), liste_capteurs_date.end(), mesure.getCapteur()) == liste_capteurs_date.end()){
             liste_capteurs_date.push_back(mesure.getCapteur());
@@ -286,10 +287,10 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
 
     vector<Capteur> liste_capteurs_fiables;
     liste_capteurs_fiables = get_liste_capteurs_fiables();
-
+    //printf("liste_capteurs_fiables : %ld\n", liste_capteurs_fiables.size());
     vector<Capteur> liste_capteurs_date;
     liste_capteurs_date = get_liste_capteurs_date(date);
-
+    //printf("liste_capteurs_date : %ld\n", liste_capteurs_date.size());
     vector<Capteur> liste_capteurs;
     for (unsigned int i = 0; i < liste_capteurs_fiables.size(); i++){
         if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
@@ -365,6 +366,8 @@ string Model::getAirQuality(long latitude, long longitude, time_t date_debut, ti
     // Elle utilise getIndiceATMO. 
     // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis, la date fin est initialisée à date debut si l’utilisateur souhaite la qualité de l’air un jour précis.
     // Retourne : la qualité de l’air.
+    
+    //printf("date_debut : %s date_fin : %s latitude : %ld longitude : %ld rayon : %d\n", ctime(&date_debut), ctime(&date_fin), latitude, longitude, rayon);
     time_t date = date_debut;
     int nb_jour = 0;
     double val_O3 = 0;
@@ -373,6 +376,7 @@ string Model::getAirQuality(long latitude, long longitude, time_t date_debut, ti
     double val_PM10 = 0;
     while (date != date_fin + 1){
         vector<double> liste_indice_ATMO = getIndiceATMO(latitude, longitude, date, rayon);
+        printf("liste_indice_ATMO : %f %f %f %f\n", liste_indice_ATMO[0], liste_indice_ATMO[1], liste_indice_ATMO[2], liste_indice_ATMO[3]);
         val_O3 += liste_indice_ATMO[0];
         val_SO2 += liste_indice_ATMO[1];
         val_NO2 += liste_indice_ATMO[2];

@@ -10,7 +10,7 @@
 #ifndef CLEANER_H
 #define CLEANER_H
 
-//--------------------------------------------------- Interfac;,bkjvjes utilisées
+//--------------------------------------------------- Interfaces utilisées
 
 //-------------------------------------------------------- Include système
 #include <string>

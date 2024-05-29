@@ -14,6 +14,10 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
 //------------------------------------------------------ Include personnel
 using namespace std;
 #include "Controller.h"
@@ -147,6 +151,59 @@ void Controller::mainControllerLoop(){
                             texte = "Consulter les données brutes\r\nPAS ENCORE IMPLEMENTEE\r\n\r\n";   
                             this->vue.setTexteVueCourante(texte);
                             this->vue.afficherVueSansEntreeUtilisateur();
+                        }
+                        else if(entreeUtilisateur == 2){
+                            texte = "Consulter la qualité de l'air\r\nPAS ENCORE IMPLEMENTEE\r\n\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVueSansEntreeUtilisateur();
+                            //this->vue.afficherVue();
+                            texte = "latitude :\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVue();
+                            string strlatitude = this->vue.getEntreeUtilisateur();
+                            long latitude = stol(strlatitude);
+
+                            texte = "longitude :\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVue();
+                            string strlongitude = this->vue.getEntreeUtilisateur();
+                            long longitude = stol(strlongitude);
+
+                            texte = "date de début :\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVue();
+                            string strdate_debut = this->vue.getEntreeUtilisateur();
+                            tm tm1={};
+                            istringstream ss(strdate_debut);
+                            ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
+                            time_t date_debut = mktime(&tm1);
+                            printf("date_debut : %s\n", asctime(localtime(&date_debut)));
+
+                            texte = "date de fin :\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVue();
+                            string strdate_fin = this->vue.getEntreeUtilisateur();
+                            tm tm2={};
+                            istringstream ss2(strdate_fin);
+                            ss2 >> get_time(&tm2, "%Y-%m-%d %H:%M:%S");
+                            time_t date_fin = mktime(&tm2);
+                            printf("date_fin: %s\n", asctime(localtime(&date_fin)));
+
+                            texte = "rayon :\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVue();
+                            string strrayon = this->vue.getEntreeUtilisateur();
+                            int rayon = stoi(strrayon);
+                            printf("rayon : %d\n", rayon);
+
+                            string airQuality = this->model.getAirQuality(latitude, longitude, date_debut, date_fin, rayon);
+                            texte = "La qualité de l'air est : " + airQuality + "\r\n";
+                            this->vue.setTexteVueCourante(texte);
+                            this->vue.afficherVueSansEntreeUtilisateur();
+
+
+                            
+
                         }
                     }
                     break;

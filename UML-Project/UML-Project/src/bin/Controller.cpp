@@ -115,10 +115,14 @@ void Controller::mainControllerLoop(){
         }
         else {
             vector<Particulier> listeParticuliers = this->model.getListeParticuliers();
+            cout << this->model.getListeParticuliers()[0].getLogin() << endl;
             for(unsigned int i = 0 ; i<listeParticuliers.size(); i++){
+                cout << "gg" << endl;
                 if(login.compare(listeParticuliers[i].getLogin()) == 0){
                     // MENU PARTICULIER
+                    cout << "gg" << endl;
                     while(1){
+                        cout << "gg" << endl;
                         texte = "Bienvenue " + login + ", vous souhaitez :\r\n";
                         texte += "1- Consulter les données brutes\r\n";
                         texte += "2- Consulter les statistiques sur les données\r\n";

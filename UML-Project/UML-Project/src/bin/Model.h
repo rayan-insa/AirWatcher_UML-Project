@@ -91,11 +91,18 @@ public:
     double getValeurDateType(Capteur capteur, time_t date, string type);
     // Mode d'emploi :
     // Cette méthode retourne la valeur d'un type de mesure à une date donnée pour un capteur donné.
+
+    string calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10);
+    // Mode d'emploi :
+    // Cette méthode retourne l'indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
     
     vector<double> getIndiceATMO(long latitude, long longitude, time_t date, int rayon = 0);
     // Mode d'emploi :
     // Cette méthode retourne l'indice ATMO à une date donnée pour une zone donnée.
 
+    string getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon);
+    // Mode d'emploi :
+    // Cette méthode retourne la qualité de l'air pour une zone donnée et une période donnée.
 
 //-------------------------------------------- Constructeurs - destructeur
 

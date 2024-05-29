@@ -209,7 +209,7 @@ Model::Model (  )
             ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
             time_t time = mktime(&tm1);
             long val = stol(value);
-            for (int i=0; i<listeCapteurs.size(); i++) {
+            for (int i=0; i < listeCapteurs.size(); i++) {
                 if (listeCapteurs[i].getId() == sensor) {
                     Mesure mesure = Mesure(time, type, val, listeCapteurs[i]);
                     listeMesures.push_back(mesure);
@@ -242,7 +242,7 @@ vector<Capteur> Model::get_liste_capteurs_fiables(){
     // Un capteur est considéré comme digne de confiance si son attribut defaillant = True. 
     // Retourne : un vecteur de capteurs dignes de confiance.
     vector<Capteur> liste_capteurs_fiables;
-    for (int i = 0; i < listeCapteurs.size(); i++){
+    for (int i = 0; i < (int) listeCapteurs.size(); i++){
         Capteur capteur = listeCapteurs[i];
         if (capteur.getDefaillant()){
             liste_capteurs_fiables.push_back(capteur);
@@ -255,7 +255,7 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
     // Cette fonction permet de donner la liste des capteurs qui contiennent des mesures à la date donnée en paramètre. 
     // Retourne : un vecteur de capteurs qui contiennent des mesures à la date donnée.
     vector<Capteur> liste_capteurs_date;
-    for (int i = 0; i < listeMesures.size(); i++){
+    for (int i = 0; i < (int) listeMesures.size(); i++){
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && find(liste_capteurs_date.begin(), liste_capteurs_date.end(), mesure.getCapteur()) == liste_capteurs_date.end()){
             liste_capteurs_date.push_back(mesure.getCapteur());
@@ -272,16 +272,39 @@ double Model::trouver_distance(long lat1, long lon1, long lat2, long lon2){
 
 double Model::getValeurDateType(Capteur capteur, time_t date, string type){
     // Cette fonction permet de donner la valeur d’un type de mesure à une date donnée pour un capteur donné.
-    for (int i=0; i<listeMesures.size(); i++){
+    for (int i=0; i< (int) listeMesures.size(); i++){
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && mesure.getCapteur() == capteur && mesure.getTypeMesure() == type){
             return mesure.getValeur();
         }
     }
+    return 0;
+}
+
+string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10){
+    // Cette fonction permet de calculer l’indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
+    if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
+        return "Extrêmement mauvais";
+    }
+    else if (val_O3 > 240.0 || val_SO2 > 500.0 || val_NO2 > 230.0 || val_PM10 > 100.0){
+        return "Très mauvais";
+    }
+    else if (val_O3 > 130.0 || val_SO2 > 350.0 || val_NO2 > 120.0 || val_PM10 > 50.0){
+        return "Mauvais";
+    }
+    else if (val_O3 > 100.0 || val_SO2 > 200.0 || val_NO2 > 90.0 || val_PM10 > 40.0){
+        return "Dégradé";
+    }
+    else if (val_O3 > 50.0 || val_SO2 > 100.0 || val_NO2 > 40.0 || val_PM10 > 20.0){
+        return "Moyen";
+    }
+    else {
+        return "Bon";
+    }
 }
 
 
-vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, int rayon = 0){
+vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, int rayon){
     // Cette fonction permet de donner la moyenne des différents indicateur ATMO à un moment et un temps donné. 
     // Pour ce calcul, l’algorithme choisit parmi les capteurs dignes de confiance et qui contiennent des mesures à la date donnée en paramètre. 
     // Il effectue ensuite une moyenne pondérée de tous les capteurs situés dans un rayon de ”rayon” fois la distance du capteur le plus proche. 
@@ -295,14 +318,14 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     liste_capteurs_date = get_liste_capteurs_date(date);
 
     vector<Capteur> liste_capteurs;
-    for (int i = 0; i < liste_capteurs_fiables.size(); i++){
+    for (int i = 0; i < (int) liste_capteurs_fiables.size(); i++){
         if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
             liste_capteurs.push_back(*(liste_capteurs_fiables.begin() + i));
         }
     }
 
     vector<Capteur> capteurs_proches;
-    for (int i = 0; i < liste_capteurs.size(); i++){
+    for (int i = 0; i < (int) liste_capteurs.size(); i++){
         Capteur capteur = liste_capteurs[i];
         double distance = trouver_distance(latitude, longitude, capteur.getLatitude(), capteur.getLongitude());
         if (distance < rayon){
@@ -320,7 +343,7 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     double somme_val_PM10 = 0;
     double diviseur = 0;
     
-    for (int i=0; i < capteurs_proches.size(); i++){
+    for (int i=0; i < (int) capteurs_proches.size(); i++){
         double val_O3 = getValeurDateType(capteurs_proches[i], date, "O3");
         somme_val_O3 += val_O3 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
         double val_SO2 = getValeurDateType(capteurs_proches[i], date, "SO2");
@@ -341,3 +364,31 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     return moyenne_indice;
 }
 
+
+string Model::getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon = 0){
+    // Cette fonction permet de donner la qualité de l’air sur une période donnée sur une zone circulaire donnée. 
+    // Elle utilise getIndiceATMO. 
+    // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis, la date fin est initialisée à date debut si l’utilisateur souhaite la qualité de l’air un jour précis.
+    // Retourne : la qualité de l’air.
+    time_t date = date_debut;
+    int nb_jour = 0;
+    double val_O3 = 0;
+    double val_SO2 = 0;
+    double val_NO2 = 0;
+    double val_PM10 = 0;
+    while (date != date_fin + 1){
+        vector<double> liste_indice_ATMO = getIndiceATMO(latitude, longitude, date, rayon);
+        val_O3 += liste_indice_ATMO[0];
+        val_SO2 += liste_indice_ATMO[1];
+        val_NO2 += liste_indice_ATMO[2];
+        val_PM10 += liste_indice_ATMO[3];
+        nb_jour++;
+        date++;
+    }
+    val_O3 /= nb_jour;
+    val_SO2 /= nb_jour;
+    val_NO2 /= nb_jour;
+    val_PM10 /= nb_jour;
+    string qualite_air = calculer_indice_ATMO(val_O3, val_SO2, val_NO2, val_PM10);
+    return qualite_air;
+}

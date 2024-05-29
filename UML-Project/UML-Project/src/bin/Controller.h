@@ -17,11 +17,10 @@
 #include <memory>
 //---------------------------------------------------Includes personnels
 using namespace std;
+#include "Model.h"
+#include "View.h"
 
 //------------------------------------------------------------------ Types
-
-class Model;
-class View;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Controller>
@@ -40,20 +39,22 @@ public:
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
 
-    shared_ptr<Model>  getModel() const;
+    Model  getModel() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet Model associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.
     // Elle ne prend aucun paramètre.
     // Elle renvoie l'objet Model associé au Controller.
 
-    shared_ptr<View>  getView() const;
+    View  getView() const;
     // Mode d'emploi : 
     // Cette méthode retourne l'objet View associé au Controller.
     // Elle est constante pour garantir qu'elle ne modifie pas l'objet Controller.
     // Elle ne prend aucun paramètre.
     // Elle renvoie l'objet View associé au Controller.
 
+
+    void mainControllerLoop();
 //-------------------------------------------- Constructeurs - destructeur
 
     Controller ( );
@@ -61,7 +62,7 @@ public:
     //
     // Contrat :
 
-    Controller ( shared_ptr<Model>  model, shared_ptr<View>  vue );
+    Controller ( Model  model, View  vue );
     // Mode d'emploi : constructeur de Controller
     //
     // Contrat :
@@ -77,8 +78,8 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-shared_ptr<Model> model;
-shared_ptr<View> vue;
+Model model;
+View vue;
 };
 
 #endif // Controller_H

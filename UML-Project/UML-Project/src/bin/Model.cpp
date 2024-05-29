@@ -28,10 +28,6 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 
-Controller Model::getController() const {
-    return controller;
-}
-
 Gouvernement Model::getGouvernement() const {
     return gouv;
 }
@@ -61,7 +57,7 @@ Model::Model (  )
 #ifdef MAP
     cout << "Appel au constructeur par défault de <Model>" << endl;
 #endif
-    controller = Controller();
+    
     gouv = Gouvernement();
     ifstream file("dataset/users.csv");
 
@@ -70,13 +66,13 @@ Model::Model (  )
         cerr << "Error: Could not open file users.csv" << endl;
         return;
     }
-    string line;
-    while (getline(file, line))
+    string line1;
+    while (getline(file, line1))
     {
-        size_t pos = line.find(';');
+        size_t pos = line1.find(';');
         if (pos != string::npos) {
-            string user = line.substr(0, pos);
-            string sensor = line.substr(pos + 1);
+            string user = line1.substr(0, pos);
+            string sensor = line1.substr(pos + 1);
             Particulier particulier = Particulier(user, 0, true);
             Capteur capteur = Capteur(sensor, 0, 0, true, particulier);
             listeParticuliers.push_back(particulier);
@@ -91,10 +87,10 @@ Model::Model (  )
         cerr << "Error: Could not open file sensors.csv" << endl;
         return;
     }
-    string line;
-    while (getline(file2, line))
+    string line2;
+    while (getline(file2, line2))
     {
-        stringstream ss(line);
+        stringstream ss(line2);
         string id;
         string latitude;
         string longitude;
@@ -103,7 +99,7 @@ Model::Model (  )
 
             long lat = stol(latitude);
             long lon = stol(longitude);
-            for (int i=0; i<listeCapteurs.size(); i++) {
+            for (unsigned int i=0; i<listeCapteurs.size(); i++) {
                 if (listeCapteurs[i].getId() == id) {
                     listeCapteurs[i].setLatitude(lat);
                     listeCapteurs[i].setLongitude(lon);
@@ -125,15 +121,16 @@ Model::Model (  )
         cerr << "Error: Could not open file providers.csv" << endl;
         return;
     }
-    string line;
-    while (getline(file3, line))
+    string line3;
+    while (getline(file3, line3))
     {
-        size_t pos = line.find(';');
+        size_t pos = line3.find(';');
         if (pos != string::npos) {
-            string provider = line.substr(0, pos);
-            string sensor = line.substr(pos + 1);
+            string provider = line3.substr(0, pos);
+            string sensor = line3.substr(pos + 1);
             Fournisseur fournisseur = Fournisseur(provider);
-            Cleaner cleaner = Cleaner(sensor, 0, 0, NULL, NULL, fournisseur);
+            time_t time = 0;
+            Cleaner cleaner = Cleaner(sensor, 0, 0, time, time, fournisseur);
             listeFournisseurs.push_back(fournisseur);
             listeCleaners.push_back(cleaner);
         }
@@ -147,10 +144,10 @@ Model::Model (  )
         cerr << "Error: Could not open file cleaners.csv" << endl;
         return;
     }
-    string line;
-    while (getline(file4, line))
+    string line4;
+    while (getline(file4, line4))
     {
-        stringstream ss(line);
+        stringstream ss(line4);
         string id;
         string latitude;
         string longitude;
@@ -171,7 +168,7 @@ Model::Model (  )
             time_t end = mktime(&tm2);
 
 
-            for (int i=0; i<listeCleaners.size(); i++) {
+            for (unsigned int i=0; i<listeCleaners.size(); i++) {
                 if (listeCleaners[i].getId() == id) {
                     listeCleaners[i].setLatitude(lat);
                     listeCleaners[i].setLongitude(lon);
@@ -193,10 +190,10 @@ Model::Model (  )
         cerr << "Error: Could not open file measures.csv" << endl;
         return;
     }
-    string line;
-    while (getline(file5, line))
+    string line5;
+    while (getline(file5, line5))
     {
-        stringstream ss(line);
+        stringstream ss(line5);
         string sensor;
         string date;
         string type;
@@ -209,7 +206,7 @@ Model::Model (  )
             ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
             time_t time = mktime(&tm1);
             long val = stol(value);
-            for (int i=0; i < listeCapteurs.size(); i++) {
+            for (unsigned int i=0; i<listeCapteurs.size(); i++) {
                 if (listeCapteurs[i].getId() == sensor) {
                     Mesure mesure = Mesure(time, type, val, listeCapteurs[i]);
                     listeMesures.push_back(mesure);
@@ -220,14 +217,6 @@ Model::Model (  )
     file5.close();
 
 }
-
-Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures)
- : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs), listeMesures(listeMesures)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <Model>" << endl;
-#endif
-} //----- Fin de Model
 
 
 Model::~Model ()
@@ -242,7 +231,7 @@ vector<Capteur> Model::get_liste_capteurs_fiables(){
     // Un capteur est considéré comme digne de confiance si son attribut defaillant = True. 
     // Retourne : un vecteur de capteurs dignes de confiance.
     vector<Capteur> liste_capteurs_fiables;
-    for (int i = 0; i < (int) listeCapteurs.size(); i++){
+    for (unsigned int i = 0; i < listeCapteurs.size(); i++){
         Capteur capteur = listeCapteurs[i];
         if (capteur.getDefaillant()){
             liste_capteurs_fiables.push_back(capteur);
@@ -255,7 +244,7 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
     // Cette fonction permet de donner la liste des capteurs qui contiennent des mesures à la date donnée en paramètre. 
     // Retourne : un vecteur de capteurs qui contiennent des mesures à la date donnée.
     vector<Capteur> liste_capteurs_date;
-    for (int i = 0; i < (int) listeMesures.size(); i++){
+    for (unsigned int i = 0; i < listeMesures.size(); i++){
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && find(liste_capteurs_date.begin(), liste_capteurs_date.end(), mesure.getCapteur()) == liste_capteurs_date.end()){
             liste_capteurs_date.push_back(mesure.getCapteur());
@@ -272,35 +261,14 @@ double Model::trouver_distance(long lat1, long lon1, long lat2, long lon2){
 
 double Model::getValeurDateType(Capteur capteur, time_t date, string type){
     // Cette fonction permet de donner la valeur d’un type de mesure à une date donnée pour un capteur donné.
-    for (int i=0; i< (int) listeMesures.size(); i++){
+    for (unsigned int i=0; i<listeMesures.size(); i++){
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && mesure.getCapteur() == capteur && mesure.getTypeMesure() == type){
             return mesure.getValeur();
         }
     }
-    return 0;
-}
 
-string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10){
-    // Cette fonction permet de calculer l’indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
-    if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
-        return "Extrêmement mauvais";
-    }
-    else if (val_O3 > 240.0 || val_SO2 > 500.0 || val_NO2 > 230.0 || val_PM10 > 100.0){
-        return "Très mauvais";
-    }
-    else if (val_O3 > 130.0 || val_SO2 > 350.0 || val_NO2 > 120.0 || val_PM10 > 50.0){
-        return "Mauvais";
-    }
-    else if (val_O3 > 100.0 || val_SO2 > 200.0 || val_NO2 > 90.0 || val_PM10 > 40.0){
-        return "Dégradé";
-    }
-    else if (val_O3 > 50.0 || val_SO2 > 100.0 || val_NO2 > 40.0 || val_PM10 > 20.0){
-        return "Moyen";
-    }
-    else {
-        return "Bon";
-    }
+    return -1;
 }
 
 
@@ -318,14 +286,14 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     liste_capteurs_date = get_liste_capteurs_date(date);
 
     vector<Capteur> liste_capteurs;
-    for (int i = 0; i < (int) liste_capteurs_fiables.size(); i++){
+    for (unsigned int i = 0; i < liste_capteurs_fiables.size(); i++){
         if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
             liste_capteurs.push_back(*(liste_capteurs_fiables.begin() + i));
         }
     }
 
     vector<Capteur> capteurs_proches;
-    for (int i = 0; i < (int) liste_capteurs.size(); i++){
+    for (unsigned int i = 0; i < liste_capteurs.size(); i++){
         Capteur capteur = liste_capteurs[i];
         double distance = trouver_distance(latitude, longitude, capteur.getLatitude(), capteur.getLongitude());
         if (distance < rayon){
@@ -343,7 +311,7 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     double somme_val_PM10 = 0;
     double diviseur = 0;
     
-    for (int i=0; i < (int) capteurs_proches.size(); i++){
+    for (unsigned int i=0; i < capteurs_proches.size(); i++){
         double val_O3 = getValeurDateType(capteurs_proches[i], date, "O3");
         somme_val_O3 += val_O3 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
         double val_SO2 = getValeurDateType(capteurs_proches[i], date, "SO2");
@@ -364,6 +332,28 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     return moyenne_indice;
 }
 
+string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10){
+    // Cette fonction permet de calculer l’indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
+    // Retourne : l’indice ATMO.
+    if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
+        return("Extrêmement mauvais");
+    }
+    else if (val_O3 > 240.0 || val_SO2 > 500.0 || val_NO2 > 230.0 || val_PM10 > 100.0){
+        return("Très mauvais");
+    }
+    else if (val_O3 > 130.0 || val_SO2 > 350.0 || val_NO2 > 120.0 || val_PM10 > 50.0){
+        return("Mauvais");
+    }
+    else if (val_O3 > 100.0 || val_SO2 > 200.0 || val_NO2 > 90.0 || val_PM10 > 40.0){
+        return("Dégradé");
+    }
+    else if (val_O3 > 50.0 || val_SO2 > 100.0 || val_NO2 > 40.0 || val_PM10 > 20.0){
+        return("Moyen");
+    }
+    else {
+        return("Bon");
+    }
+}
 
 string Model::getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon = 0){
     // Cette fonction permet de donner la qualité de l’air sur une période donnée sur une zone circulaire donnée. 

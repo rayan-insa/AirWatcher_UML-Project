@@ -88,7 +88,7 @@ Model::Model (  )
     ifstream file2("dataset/sensors.csv");
     if (!file2.is_open())
     {
-        cerr << "Error: Could not open file users.csv" << endl;
+        cerr << "Error: Could not open file sensors.csv" << endl;
         return;
     }
     string line;
@@ -185,10 +185,44 @@ Model::Model (  )
             }
         }
     }
+    file4.close();
+
+    ifstream file5("dataset/measures.csv");
+    if (!file5.is_open())
+    {
+        cerr << "Error: Could not open file measures.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file5, line))
+    {
+        stringstream ss(line);
+        string sensor;
+        string date;
+        string type;
+        string value;
+
+        if (getline(ss, date, ';') && getline(ss, sensor, ';') && getline(ss, type, ';') && getline(ss, value, ';')){
+
+            tm tm1={};
+            istringstream ss(date);
+            ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
+            time_t time = mktime(&tm1);
+            long val = stol(value);
+            for (int i=0; i<listeCapteurs.size(); i++) {
+                if (listeCapteurs[i].getId() == sensor) {
+                    Mesure mesure = Mesure(time, type, val, listeCapteurs[i]);
+                    listeMesures.push_back(mesure);
+                }
+            }
+        }
+    }
+    file5.close();
+
 }
 
-Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs )
- : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs)
+Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures)
+ : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs), listeMesures(listeMesures)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Model>" << endl;
@@ -275,7 +309,7 @@ vector<long> Model::getIndiceATMO(long latitude, long longitude, time_t date, in
     long somme_val_NO2 = 0;
     long somme_val_PM10 = 0;
     long diviseur = 0;
-    """
+    /*
     for (int i=1; i < capteurs_proches.size(); i++){
         long val_O3 = capteurs_proches[i].getValeurDateType(date, 'O3');
         somme_val_O3 += val_O3 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
@@ -287,14 +321,13 @@ vector<long> Model::getIndiceATMO(long latitude, long longitude, time_t date, in
         somme_val_PM10 += val_PM10 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
         diviseur += (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
     }
-    """
+    */
 
 
 }
 
 
-"""
-
+/*
 for i allant de 1 `a la longueur de capteur proche do
 val O3 ← get valeur date type(capteur proche[i], date,’O3’)
 somme val O3 ← val O3 + mesure * (rayon - distance)
@@ -312,4 +345,4 @@ somme val NO2 ← somme val NO2 / diviseur
 somme val PM10 ← somme val PM10 / diviseur
 moyenne indice ← [somme val O3, somme val SO2, somme val NO2, somme val PM10]
 renvoyer moyenne indice
-"""
+*/

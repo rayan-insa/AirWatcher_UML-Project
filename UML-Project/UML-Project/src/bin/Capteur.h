@@ -76,6 +76,9 @@ public:
 	bool operator==(const Capteur& capteur2) const;
 	// Mode d'emploi : surcharge de l'opérateur == pour comparer deux capteurs
 
+	Capteur findCapteur(string id);
+	// Mode d'emploi : retourne le capteur correspondant à l'id
+
 //------------------------------------------------------------------ PRIVE
 private:
 //----------------------------------------------------- Attributs protégés

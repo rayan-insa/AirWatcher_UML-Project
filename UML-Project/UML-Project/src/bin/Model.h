@@ -100,7 +100,7 @@ public:
     //
     // Contrat :
 
-    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
+    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures );
     // Mode d'emploi : constructeur par défaut de Model
     //
     // Contrat :

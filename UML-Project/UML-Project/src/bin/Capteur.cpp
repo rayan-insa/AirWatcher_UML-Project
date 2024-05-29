@@ -90,6 +90,16 @@ void Capteur::setDefaillant(bool def) {
     defaillant = def;
 }
 
+// Méthode pour trouver un capteur
+Capteur Capteur::findCapteur(string id) {
+    if(id == this->id) {
+        return *this;
+    }
+    else {
+        return Capteur();
+    }
+}
+
 //---------------------------------------------------------- Surcharge d'opérateurs
 
 // Méthode pour comparer deux capteurs

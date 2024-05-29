@@ -337,3 +337,53 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     return moyenne_indice;
 }
 
+string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10){
+    // Cette fonction permet de calculer l’indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
+    // Retourne : l’indice ATMO.
+    if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
+        return("Extrêmement mauvais");
+    }
+    else if (val_O3 > 240.0 || val_SO2 > 500.0 || val_NO2 > 230.0 || val_PM10 > 100.0){
+        return("Très mauvais");
+    }
+    else if (val_O3 > 130.0 || val_SO2 > 350.0 || val_NO2 > 120.0 || val_PM10 > 50.0){
+        return("Mauvais");
+    }
+    else if (val_O3 > 100.0 || val_SO2 > 200.0 || val_NO2 > 90.0 || val_PM10 > 40.0){
+        return("Dégradé");
+    }
+    else if (val_O3 > 50.0 || val_SO2 > 100.0 || val_NO2 > 40.0 || val_PM10 > 20.0){
+        return("Moyen");
+    }
+    else {
+        return("Bon");
+    }
+}
+
+string Model::getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon = 0){
+    // Cette fonction permet de donner la qualité de l’air sur une période donnée sur une zone circulaire donnée. 
+    // Elle utilise getIndiceATMO. 
+    // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis, la date fin est initialisée à date debut si l’utilisateur souhaite la qualité de l’air un jour précis.
+    // Retourne : la qualité de l’air.
+    time_t date = date_debut;
+    int nb_jour = 0;
+    double val_O3 = 0;
+    double val_SO2 = 0;
+    double val_NO2 = 0;
+    double val_PM10 = 0;
+    while (date != date_fin + 1){
+        vector<double> liste_indice_ATMO = getIndiceATMO(latitude, longitude, date, rayon);
+        val_O3 += liste_indice_ATMO[0];
+        val_SO2 += liste_indice_ATMO[1];
+        val_NO2 += liste_indice_ATMO[2];
+        val_PM10 += liste_indice_ATMO[3];
+        nb_jour++;
+        date++;
+    }
+    val_O3 /= nb_jour;
+    val_SO2 /= nb_jour;
+    val_NO2 /= nb_jour;
+    val_PM10 /= nb_jour;
+    string qualite_air = calculer_indice_ATMO(val_O3, val_SO2, val_NO2, val_PM10);
+    return qualite_air;
+}

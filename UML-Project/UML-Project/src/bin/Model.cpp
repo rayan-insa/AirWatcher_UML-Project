@@ -59,7 +59,7 @@ Model::Model (  )
 #endif
     
     gouv = Gouvernement();
-    ifstream file("dataset/users.csv");
+    ifstream file("../dataset/users.csv");
 
     if (!file.is_open())
     {
@@ -81,7 +81,7 @@ Model::Model (  )
     }
     file.close();
 
-    ifstream file2("dataset/sensors.csv");
+    ifstream file2("../dataset/sensors.csv");
     if (!file2.is_open())
     {
         cerr << "Error: Could not open file sensors.csv" << endl;
@@ -96,26 +96,31 @@ Model::Model (  )
         string longitude;
 
         if (getline(ss, id, ';') && getline(ss, latitude, ';') && getline(ss, longitude, ';')) {
-
+            
             long lat = stol(latitude);
             long lon = stol(longitude);
-            for (unsigned int i=0; i<listeCapteurs.size(); i++) {
+            
+            bool flag = false;
+            for(unsigned int i = 0; i < listeCapteurs.size(); i++) {
                 if (listeCapteurs[i].getId() == id) {
                     listeCapteurs[i].setLatitude(lat);
                     listeCapteurs[i].setLongitude(lon);
-                }
-                else {
-                    Capteur capteur = Capteur(id, lat, lon, false, Gouvernement());
-                    listeCapteurs.push_back(capteur);
+                    flag = true;
+                    break;
                 }
             }
+            if(!flag) {  
+                Capteur capteur = Capteur(id, lat, lon, false, Gouvernement());
+                listeCapteurs.push_back(capteur);
+                }
 
         }
     }
+
     file.close();
 
 
-    ifstream file3("dataset/providers.csv");
+    ifstream file3("../dataset/providers.csv");
     if (!file3.is_open())
     {
         cerr << "Error: Could not open file providers.csv" << endl;
@@ -138,7 +143,7 @@ Model::Model (  )
     file3.close();
 
     
-    ifstream file4("dataset/cleaners.csv");
+    ifstream file4("../dataset/cleaners.csv");
     if (!file4.is_open())
     {
         cerr << "Error: Could not open file cleaners.csv" << endl;
@@ -184,7 +189,7 @@ Model::Model (  )
     }
     file4.close();
 
-    ifstream file5("dataset/measures.csv");
+    ifstream file5("../dataset/measurements.csv");
     if (!file5.is_open())
     {
         cerr << "Error: Could not open file measures.csv" << endl;

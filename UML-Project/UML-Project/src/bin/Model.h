@@ -87,6 +87,10 @@ public:
     double trouver_distance(long lat1, long lon1, long lat2, long lon2);
     // Mode d'emploi :
     // Cette méthode retourne la distance entre deux points géographiques.
+
+    double getValeurDateType(Capteur capteur, time_t date, string type);
+    // Mode d'emploi :
+    // Cette méthode retourne la valeur d'un type de mesure à une date donnée pour un capteur donné.
     
     vector<long> getIndiceATMO(long latitude, long longitude, time_t date, int rayon = 0);
     // Mode d'emploi :

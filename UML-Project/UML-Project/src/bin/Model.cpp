@@ -14,6 +14,12 @@
 
 //------------------------------------------------------ Include personnel
 #include "Model.h"
+#include <string.h>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -42,13 +48,186 @@ vector<Fournisseur> Model::getListeFournisseurs() const {
     return listeFournisseurs;
 }
 
+vector<Mesure> Model::getListeMesures() const {
+    return listeMesures;
+}
+
 Model::Model (  )
 {
 #ifdef MAP
     cout << "Appel au constructeur par défault de <Model>" << endl;
 #endif
+    controller = Controller();
+    gouv = Gouvernement();
+    ifstream file("dataset/users.csv");
+
+    if (!file.is_open())
+    {
+        cerr << "Error: Could not open file users.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file, line))
+    {
+        size_t pos = line.find(';');
+        if (pos != string::npos) {
+            string user = line.substr(0, pos);
+            string sensor = line.substr(pos + 1);
+            Particulier particulier = Particulier(user, 0, true);
+            Capteur capteur = Capteur(sensor, 0, 0, true, particulier);
+            listeParticuliers.push_back(particulier);
+            listeCapteurs.push_back(capteur);
+        }
+    }
+    file.close();
+
+    ifstream file2("dataset/sensors.csv");
+    if (!file2.is_open())
+    {
+        cerr << "Error: Could not open file sensors.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file2, line))
+    {
+        stringstream ss(line);
+        string id;
+        string latitude;
+        string longitude;
+
+        if (getline(ss, id, ';') && getline(ss, latitude, ';') && getline(ss, longitude, ';')) {
+
+            long lat = stol(latitude);
+            long lon = stol(longitude);
+            for (int i=0; i<listeCapteurs.size(); i++) {
+                if (listeCapteurs[i].getId() == id) {
+                    listeCapteurs[i].setLatitude(lat);
+                    listeCapteurs[i].setLongitude(lon);
+                }
+                else {
+                    Capteur capteur = Capteur(id, lat, lon, false, Gouvernement());
+                    listeCapteurs.push_back(capteur);
+                }
+            }
+
+        }
+    }
+    file.close();
+
+
+    ifstream file3("dataset/providers.csv");
+    if (!file3.is_open())
+    {
+        cerr << "Error: Could not open file providers.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file3, line))
+    {
+        size_t pos = line.find(';');
+        if (pos != string::npos) {
+            string provider = line.substr(0, pos);
+            string sensor = line.substr(pos + 1);
+            Fournisseur fournisseur = Fournisseur(provider);
+            Cleaner cleaner = Cleaner(sensor, 0, 0, NULL, NULL, fournisseur);
+            listeFournisseurs.push_back(fournisseur);
+            listeCleaners.push_back(cleaner);
+        }
+    }
+    file3.close();
+
+    
+    ifstream file4("dataset/cleaners.csv");
+    if (!file4.is_open())
+    {
+        cerr << "Error: Could not open file cleaners.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file4, line))
+    {
+        stringstream ss(line);
+        string id;
+        string latitude;
+        string longitude;
+        string time_stamp_start;
+        string time_stamp_end;
+
+        if (getline(ss, id, ';') && getline(ss, latitude, ';') && getline(ss, longitude, ';') && getline(ss, time_stamp_start, ';') && getline(ss, time_stamp_end, ';')){
+
+            long lat = stol(latitude);
+            long lon = stol(longitude);
+            tm tm1={};
+            istringstream ss(time_stamp_start);
+            ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
+            time_t start = mktime(&tm1);
+            tm tm2={};
+            istringstream ss2(time_stamp_end);
+            ss2 >> get_time(&tm2, "%Y-%m-%d %H:%M:%S");
+            time_t end = mktime(&tm2);
+
+
+            for (int i=0; i<listeCleaners.size(); i++) {
+                if (listeCleaners[i].getId() == id) {
+                    listeCleaners[i].setLatitude(lat);
+                    listeCleaners[i].setLongitude(lon);
+                    listeCleaners[i].setTimestampStart(start);
+                    listeCleaners[i].setTimestampStop(end);
+                }
+                else {
+                    Cleaner cleaner = Cleaner(id, lat, lon, start, end, Fournisseur());
+                    listeCleaners.push_back(cleaner);
+                }
+            }
+        }
+    }
+    file4.close();
+
+    ifstream file5("dataset/measures.csv");
+    if (!file5.is_open())
+    {
+        cerr << "Error: Could not open file measures.csv" << endl;
+        return;
+    }
+    string line;
+    while (getline(file5, line))
+    {
+        stringstream ss(line);
+        string sensor;
+        string date;
+        string type;
+        string value;
+
+        if (getline(ss, date, ';') && getline(ss, sensor, ';') && getline(ss, type, ';') && getline(ss, value, ';')){
+
+            tm tm1={};
+            istringstream ss(date);
+            ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
+            time_t time = mktime(&tm1);
+            long val = stol(value);
+            for (int i=0; i<listeCapteurs.size(); i++) {
+                if (listeCapteurs[i].getId() == sensor) {
+                    Mesure mesure = Mesure(time, type, val, listeCapteurs[i]);
+                    listeMesures.push_back(mesure);
+                }
+            }
+        }
+    }
+    file5.close();
+
 }
 
+<<<<<<< HEAD
+=======
+Model::Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs, vector<Mesure> listeMesures)
+ : controller(controller), gouv(gouv), listeParticuliers(listeParticuliers), listeCapteurs(listeCapteurs), listeCleaners(listeCleaners), listeFournisseurs(listeFournisseurs), listeMesures(listeMesures)
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <Model>" << endl;
+#endif
+} //----- Fin de Model
+
+>>>>>>> e79c610eb5521d56662439e04c8e4ddc9b90ccf2
 
 Model::~Model ()
 {
@@ -56,3 +235,108 @@ Model::~Model ()
     cout << "Appel au destructeur de <Model>" << endl;
 #endif
 } //----- Fin de ~Model
+
+vector<Capteur> Model::get_liste_capteurs_fiables(){
+    // Cette fonction permet de donner la liste des capteurs dignes de confiance. 
+    // Un capteur est considéré comme digne de confiance si son attribut defaillant = True. 
+    // Retourne : un vecteur de capteurs dignes de confiance.
+    vector<Capteur> liste_capteurs_fiables;
+    for (int i = 0; i < listeCapteurs.size(); i++){
+        Capteur capteur = listeCapteurs[i];
+        if (capteur.getDefaillant()){
+            liste_capteurs_fiables.push_back(capteur);
+        }
+    }
+    return liste_capteurs_fiables;
+}
+
+vector<Capteur> Model::get_liste_capteurs_date(time_t date){
+    // Cette fonction permet de donner la liste des capteurs qui contiennent des mesures à la date donnée en paramètre. 
+    // Retourne : un vecteur de capteurs qui contiennent des mesures à la date donnée.
+    vector<Capteur> liste_capteurs_date;
+    for (int i = 0; i < listeMesures.size(); i++){
+        Mesure mesure = listeMesures[i];
+        if (mesure.getDate() == date && find(liste_capteurs_date.begin(), liste_capteurs_date.end(), mesure.getCapteur()) == liste_capteurs_date.end()){
+            liste_capteurs_date.push_back(mesure.getCapteur());
+        }
+    }
+    return liste_capteurs_date;
+}
+
+double Model::trouver_distance(long lat1, long lon1, long lat2, long lon2){
+    // Cette fonction permet de calculer la distance entre deux points géographiques. 
+    // Retourne : la distance entre les deux points.
+    return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
+}
+
+double Model::getValeurDateType(Capteur capteur, time_t date, string type){
+    // Cette fonction permet de donner la valeur d’un type de mesure à une date donnée pour un capteur donné.
+    for (int i=0; i<listeMesures.size(); i++){
+        Mesure mesure = listeMesures[i];
+        if (mesure.getDate() == date && mesure.getCapteur() == capteur && mesure.getTypeMesure() == type){
+            return mesure.getValeur();
+        }
+    }
+}
+
+
+vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, int rayon = 0){
+    // Cette fonction permet de donner la moyenne des différents indicateur ATMO à un moment et un temps donné. 
+    // Pour ce calcul, l’algorithme choisit parmi les capteurs dignes de confiance et qui contiennent des mesures à la date donnée en paramètre. 
+    // Il effectue ensuite une moyenne pondérée de tous les capteurs situés dans un rayon de ”rayon” fois la distance du capteur le plus proche. 
+    // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis.
+    // Retourne : un tableau de 4 valeurs correspondant à la moyenne des indices O3, SO2, NO2 et PM10.
+
+    vector<Capteur> liste_capteurs_fiables;
+    liste_capteurs_fiables = get_liste_capteurs_fiables();
+
+    vector<Capteur> liste_capteurs_date;
+    liste_capteurs_date = get_liste_capteurs_date(date);
+
+    vector<Capteur> liste_capteurs;
+    for (int i = 0; i < liste_capteurs_fiables.size(); i++){
+        if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
+            liste_capteurs.push_back(*(liste_capteurs_fiables.begin() + i));
+        }
+    }
+
+    vector<Capteur> capteurs_proches;
+    for (int i = 0; i < liste_capteurs.size(); i++){
+        Capteur capteur = liste_capteurs[i];
+        double distance = trouver_distance(latitude, longitude, capteur.getLatitude(), capteur.getLongitude());
+        if (distance < rayon){
+            capteurs_proches.push_back(capteur);
+        }
+    }
+
+    if (capteurs_proches.empty()){
+        return vector<double>();
+    }
+
+    double somme_val_O3 = 0;
+    double somme_val_SO2 = 0;
+    double somme_val_NO2 = 0;
+    double somme_val_PM10 = 0;
+    double diviseur = 0;
+    
+    for (int i=0; i < capteurs_proches.size(); i++){
+        double val_O3 = getValeurDateType(capteurs_proches[i], date, "O3");
+        somme_val_O3 += val_O3 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
+        double val_SO2 = getValeurDateType(capteurs_proches[i], date, "SO2");
+        somme_val_SO2 += val_SO2 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
+        double val_NO2 = getValeurDateType(capteurs_proches[i], date, "NO2");
+        somme_val_NO2 += val_NO2 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
+        double val_PM10 = getValeurDateType(capteurs_proches[i], date, "PM10");
+        somme_val_PM10 += val_PM10 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
+        diviseur += (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
+    }
+
+    somme_val_O3 /= diviseur;
+    somme_val_SO2 /= diviseur;
+    somme_val_NO2 /= diviseur;
+    somme_val_PM10 /= diviseur;
+
+    vector<double> moyenne_indice = {somme_val_O3, somme_val_SO2, somme_val_NO2, somme_val_PM10};
+    return moyenne_indice;
+}
+

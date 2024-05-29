@@ -25,12 +25,15 @@ using namespace std;
 Mesure::Mesure() {
     date = 0;
     valeur = 0;
+    capteur = Capteur();
 }
 
 // Constructeur avec paramètres
-Mesure::Mesure(time_t date, long val) {
+Mesure::Mesure(time_t date, string type, long val, Capteur capt) {
     this->date = date;
+    type_mesure = type;
     valeur = val;
+    capteur = capt;
 }
 
 // Destructeur
@@ -44,10 +47,21 @@ time_t Mesure::getDate() const {
     return date;
 }
 
+// Méthode pour obtenir le type de la mesure
+string Mesure::getTypeMesure() const {
+    return type_mesure;
+}
+
 // Méthode pour obtenir la valeur de la mesure
 long Mesure::getValeur() const {
     return valeur;
 }
+
+// Méthode pour obtenir le capteur de la mesure
+Capteur Mesure::getCapteur() const {
+    return capteur;
+}
+
 
 //---------------------------------------------------------- Setters
 
@@ -56,7 +70,17 @@ void Mesure::setDate(time_t newDate) {
     date = newDate;
 }
 
+// Méthode pour définir le type de la mesure
+void Mesure::setTypeMesure(string type) {
+    type_mesure = type;
+}
+
 // Méthode pour définir la valeur de la mesure
 void Mesure::setValeur(long val) {
     valeur = val;
+}
+
+// Methode pour définir le capteur de la mesure
+void Mesure::setCapteur(Capteur capt) {
+    capteur = capt;
 }

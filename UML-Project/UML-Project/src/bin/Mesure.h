@@ -15,6 +15,7 @@
 //---------------------------------------------------Includes système
 #include <iostream>
 #include <ctime>
+#include "Capteur.h"
 
 //---------------------------------------------------Includes personnels
 using namespace std;
@@ -39,7 +40,7 @@ public:
 	//
 	// Contrat :
 
-	Mesure(time_t date, long val);
+	Mesure(time_t date, string type_mesure, long val, Capteur capteur);
 	// Mode d'emploi : constructeur de Mesure avec paramètres
 	//
 	// Contrat : date est un time_t et val est un long
@@ -54,14 +55,26 @@ public:
 	time_t getDate() const;
 	// Mode d'emploi : retourne la date de la mesure
 
+	string getTypeMesure() const;
+	// Mode d'emploi : retourne le type de la mesure
+
 	long getValeur() const ;
 	// Mode d'emploi : retourne la valeur de la mesure
+
+	Capteur getCapteur() const;
+	// Mode d'emploi : retourner le Capteur associé à la mesure
 
 	void setDate(time_t newDate);
 	// Mode d'emploi : définit la date de la mesure
 
+	void setTypeMesure(string type);
+	// Mode d'emploi : définit le type de la mesure
+
 	void setValeur(long val);
 	// Mode d'emploi : définit la valeur de la mesure
+
+	void setCapteur(Capteur capteur);
+	// Mode d'emploi : définit le Capteur associé à la mesure
 
 
 //------------------------------------------------------------------ PRIVE
@@ -70,8 +83,9 @@ private:
 //----------------------------------------------------- Attributs protégés
 
 	time_t date;
+	string type_mesure;
 	long valeur;
-
+	Capteur capteur;
 
 };
 

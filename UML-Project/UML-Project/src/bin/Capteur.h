@@ -17,6 +17,7 @@
 
 //---------------------------------------------------Includes personnels
 using namespace std;
+#include "Utilisateur.h"
 
 //------------------------------------------------------------------ Types
 
@@ -36,7 +37,7 @@ public:
 	//
 	// Contrat :
 
-	Capteur(long lat, long lon, bool def);
+	Capteur(string id, long lat, long lon, bool def, Utilisateur user);
 	// Mode d'emploi : constructeur de Capteur avec paramètres
 	//
 	// Contrat : lat et lon sont des longs et def est un booléen
@@ -47,6 +48,12 @@ public:
 	// Contrat :
 
 //----------------------------------------------------- Méthodes publiques
+
+	string getId() const;
+	// Mode d'emploi : retourne l'id du capteur
+
+	Utilisateur getUser() const;
+	// Mode d'emploi : retourne l'utilisateur du capteur
 
 	long getLatitude() const;
 	// Mode d'emploi : retourne la latitude du capteur
@@ -66,13 +73,20 @@ public:
 	void setDefaillant(bool def);
 	// Mode d'emploi : définit si le capteur est défaillant ou non
 
+	bool operator==(const Capteur& capteur2) const;
+	// Mode d'emploi : surcharge de l'opérateur == pour comparer deux capteurs
+
+	Capteur findCapteur(string id);
+	// Mode d'emploi : retourne le capteur correspondant à l'id
+
 //------------------------------------------------------------------ PRIVE
 private:
 //----------------------------------------------------- Attributs protégés
+	string id;
 	long latitude;
 	long longitude;
 	bool defaillant;
-
+	Utilisateur user;
 };
 
 #endif // CAPTEUR_H

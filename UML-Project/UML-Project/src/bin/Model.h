@@ -82,7 +82,7 @@ public:
     // Mode d'emploi :
     // Cette méthode retourne la valeur d'un type de mesure à une date donnée pour un capteur donné.
     
-    vector<double> getIndiceATMO(long latitude, long longitude, time_t date, int rayon = 0);
+    vector<double> getIndiceATMO(long latitude, long longitude, time_t date, int rayon);
     // Mode d'emploi :
     // Cette méthode retourne l'indice ATMO à une date donnée pour une zone donnée.
 

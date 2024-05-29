@@ -382,3 +382,5 @@ string Model::getAirQuality(long latitude, long longitude, time_t date_debut, ti
     string qualite_air = calculer_indice_ATMO(val_O3, val_SO2, val_NO2, val_PM10);
     return qualite_air;
 }
+
+

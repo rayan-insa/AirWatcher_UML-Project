@@ -321,13 +321,13 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
     double diviseur = 0;
     
     for (int i=0; i < capteurs_proches.size(); i++){
-        double val_O3 = capteurs_proches[i].getValeurDateType(date, 'O3');
+        double val_O3 = getValeurDateType(capteurs_proches[i], date, "O3");
         somme_val_O3 += val_O3 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
-        double val_SO2 = capteurs_proches[i].getValeurDateType(date, 'SO2');
+        double val_SO2 = getValeurDateType(capteurs_proches[i], date, "SO2");
         somme_val_SO2 += val_SO2 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
-        double val_NO2 = capteurs_proches[i].getValeurDateType(date, 'NO2');
+        double val_NO2 = getValeurDateType(capteurs_proches[i], date, "NO2");
         somme_val_NO2 += val_NO2 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
-        double val_PM10 = capteurs_proches[i].getValeurDateType(date, 'PM10');
+        double val_PM10 = getValeurDateType(capteurs_proches[i], date, "PM10");
         somme_val_PM10 += val_PM10 * (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
         diviseur += (rayon - trouver_distance(latitude, longitude, capteurs_proches[i].getLatitude(), capteurs_proches[i].getLongitude()));
     }

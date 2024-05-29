@@ -16,7 +16,6 @@
 #include <string>
 //---------------------------------------------------Includes personnels
 using namespace std;
-#include "Controller.h"
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -32,7 +31,7 @@ class View
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    int getEntreeUtilisateur() const;
+    string getEntreeUtilisateur() const;
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
 
@@ -40,9 +39,11 @@ public:
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
 
-    void afficherVue() const;
+    void afficherVue();
     // Mode d'emploi : 
     // écrire ici le mode d'emploi de la méthode
+
+    void afficherVueSansEntreeUtilisateur() const;
 
     void setTexteVueCourante(string texteVueCourante);
     // Mode d'emploi : 
@@ -57,7 +58,7 @@ public:
     //
     // Contrat :
 
-    View ( string texteVueCourante, int entreeUtilisateur, Controller controller );
+    
     // Mode d'emploi : constructeur par défaut de View
     //
     // Contrat :
@@ -74,8 +75,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 string texteVueCourante;
-int entreeUtilisateur;
-Controller controller;
+string entreeUtilisateur;
 };
 
 #endif // View_H

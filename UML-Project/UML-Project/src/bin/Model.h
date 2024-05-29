@@ -22,7 +22,6 @@ using namespace std;
 #include "Capteur.h"
 #include "Cleaner.h"
 #include "Fournisseur.h"
-#include "Controller.h"
 
 
 //------------------------------------------------------------------ Types
@@ -40,14 +39,6 @@ class Model
 public:
 //----------------------------------------------------- Méthodes publiques
 
-
-    View getVue() const;
-    // Mode d'emploi :
-    // Cette méthode retourne l'objet View associé au modèle.
-
-    Controller getController() const;
-    // Mode d'emploi :
-    // Cette méthode retourne l'objet Controller associé au modèle.
 
     Gouvernement getGouvernement() const;
     // Mode d'emploi :
@@ -78,10 +69,6 @@ public:
     //
     // Contrat :
 
-    Model ( Controller controller, Gouvernement gouv,  vector<Particulier> listeParticuliers, vector<Capteur> listeCapteurs, vector<Cleaner> listeCleaners, vector<Fournisseur> listeFournisseurs );
-    // Mode d'emploi : constructeur par défaut de Model
-    //
-    // Contrat :
 
     virtual ~Model ( );
     // Mode d'emploi :
@@ -94,7 +81,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-Controller controller;
+
 Gouvernement gouv;
 vector<Particulier> listeParticuliers;
 vector<Capteur> listeCapteurs;

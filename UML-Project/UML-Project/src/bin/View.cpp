@@ -26,19 +26,24 @@ string View::getTexteVueCourante() const
     return this->texteVueCourante;
 }
 
-int View::getEntreeUtilisateur() const
+string View::getEntreeUtilisateur() const
 {
     return this->entreeUtilisateur;
 }
 
 void View::setTexteVueCourante(string texteVueCourante)
-{
+{   
     this->texteVueCourante = texteVueCourante;
 }
 
-void View::afficherVue() const
+void View::afficherVue()
 {   
-    //A IMPLEMENTER
+    cout << this->texteVueCourante << endl;
+    cin >> this->entreeUtilisateur;
+}
+
+void View::afficherVueSansEntreeUtilisateur() const
+{
     cout << this->texteVueCourante << endl;
 }
 
@@ -47,14 +52,6 @@ View::View ( ) {
     cout << "Appel au constructeur par défault de <View>" << endl;
 #endif
 }
-
-View::View ( string texteVueCourante, int entreeUtilisateur, Controller controller )
- : texteVueCourante(texteVueCourante), entreeUtilisateur(entreeUtilisateur), controller(controller)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <View>" << endl;
-#endif
-} //----- Fin de View
 
 
 View::~View ()

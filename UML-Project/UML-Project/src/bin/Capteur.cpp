@@ -23,16 +23,20 @@ using namespace std;
 
 // Constructeur par défaut
 Capteur::Capteur() {
+    id = "";
     latitude = 0;
     longitude = 0;
     defaillant = false;
+    user = Utilisateur();
 }
 
 // Constructeur avec paramètres
-Capteur::Capteur(long lat, long lon, bool def) {
+Capteur::Capteur(string id, long lat, long lon, bool def, Utilisateur user) {
+    this->id = id;
     latitude = lat;
     longitude = lon;
     defaillant = def;
+    this->user = user;
 }
 
 // Destructeur
@@ -42,6 +46,17 @@ Capteur::~Capteur() {
 
 
 //---------------------------------------------------------- Getters
+
+// Méthode pour obtenir l'id
+string Capteur::getId() const {
+    return id;
+}
+
+// Méthode pour obtenir l'utilisateur
+Utilisateur Capteur::getUser() const {
+    return user;
+}
+
 
 // Méthode pour obtenir la latitude
 long Capteur::getLatitude() const {
@@ -73,6 +88,16 @@ void Capteur::setLongitude(long lon) {
 // Méthode pour définir si le capteur est défaillant ou non
 void Capteur::setDefaillant(bool def) {
     defaillant = def;
+}
+
+// Méthode pour trouver un capteur
+Capteur Capteur::findCapteur(string id) {
+    if(id == this->id) {
+        return *this;
+    }
+    else {
+        return Capteur();
+    }
 }
 
 //---------------------------------------------------------- Surcharge d'opérateurs

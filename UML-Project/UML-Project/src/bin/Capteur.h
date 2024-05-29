@@ -73,6 +73,9 @@ public:
 	void setDefaillant(bool def);
 	// Mode d'emploi : définit si le capteur est défaillant ou non
 
+	bool operator==(const Capteur& capteur2) const;
+	// Mode d'emploi : surcharge de l'opérateur == pour comparer deux capteurs
+
 //------------------------------------------------------------------ PRIVE
 private:
 //----------------------------------------------------- Attributs protégés

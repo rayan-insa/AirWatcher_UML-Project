@@ -89,3 +89,15 @@ void Capteur::setLongitude(long lon) {
 void Capteur::setDefaillant(bool def) {
     defaillant = def;
 }
+
+//---------------------------------------------------------- Surcharge d'opérateurs
+
+// Méthode pour comparer deux capteurs
+bool Capteur::operator==(const Capteur& capteur2) const {
+    if (latitude == capteur2.getLatitude() && longitude == capteur2.getLongitude() && defaillant == capteur2.getDefaillant()) {
+        return true;
+    }
+    else{ 
+        return false;
+    }
+}

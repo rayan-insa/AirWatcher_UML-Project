@@ -306,21 +306,14 @@ vector<double> Model::getIndiceATMO(double latitude, double longitude, time_t da
     liste_capteurs_fiables = get_liste_capteurs_fiables();
     vector<Capteur> liste_capteurs_date;
     liste_capteurs_date = get_liste_capteurs_date(date);
-    printf("liste_capteurs_date.size() : %ld\n", liste_capteurs_date.size());
-    for(int i = 0; i < (int) liste_capteurs_date.size(); i++){
-        printf("liste_capteurs_date[i].getId() : %s\n", liste_capteurs_date[i].getId().c_str());
-    }
+    liste_capteurs_date = get_liste_capteurs_date(date);
+
     vector<Capteur> liste_capteurs;
-    //printf("liste_capteurs_fiables.size() : %ld\n", liste_capteurs_fiables.size());
     for (unsigned int i = 0; i < liste_capteurs_fiables.size(); i++){
         if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
             liste_capteurs.push_back(*(liste_capteurs_fiables.begin() + i));
-            //printf("liste_capteurs[i].getId() : %s\n", liste_capteurs_fiables[i].getId().c_str());
         }
     }
-
-    printf("liste_capteurs.size() : %ld\n", liste_capteurs.size());
-
 
     vector<Capteur> capteurs_proches;
     for (unsigned int i = 0; i < liste_capteurs.size(); i++){
@@ -330,7 +323,6 @@ vector<double> Model::getIndiceATMO(double latitude, double longitude, time_t da
             capteurs_proches.push_back(capteur);
         }
     }
-    printf("capteurs_proches.size() : %ld\n", capteurs_proches.size());
 
     if (capteurs_proches.empty()){
         return vector<double>();
@@ -366,7 +358,13 @@ vector<double> Model::getIndiceATMO(double latitude, double longitude, time_t da
 string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2, double val_PM10){
     // Cette fonction permet de calculer l’indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
     // Retourne : l’indice ATMO.
-    if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
+    if (val_O3 == -1 || val_SO2 == -1 || val_NO2 == -1 || val_PM10 == -1){
+        return("Aucune donnée pour cette période et cette zone");
+    }
+    else if (val_O3 > 800.0 || val_SO2 > 1600.0 || val_NO2 > 340.0 || val_PM10 > 200.0){
+        return("Extrêmement dangereux");
+    }
+    else if (val_O3 > 380.0 || val_SO2 > 750.0 || val_NO2 > 340.0 || val_PM10 > 150.0){
         return("Extrêmement mauvais");
     }
     else if (val_O3 > 240.0 || val_SO2 > 500.0 || val_NO2 > 230.0 || val_PM10 > 100.0){
@@ -392,7 +390,6 @@ string Model::getAirQuality(double latitude, double longitude, time_t date_debut
     // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis, la date fin est initialisée à date debut si l’utilisateur souhaite la qualité de l’air un jour précis.
     // Retourne : la qualité de l’air.
     
-    //printf("date_debut : %s date_fin : %s latitude : %ld longitude : %ld rayon : %d\n", ctime(&date_debut), ctime(&date_fin), latitude, longitude, rayon);
     struct tm* original_timeinfo = localtime(&date_debut);
     
     int augmenter = 0;
@@ -415,20 +412,37 @@ string Model::getAirQuality(double latitude, double longitude, time_t date_debut
     double val_SO2 = 0;
     double val_NO2 = 0;
     double val_PM10 = 0;
+    int empty = 1;
     while (date < date_fin){
         vector<double> liste_indice_ATMO = getIndiceATMO(latitude, longitude, date, rayon);
-        printf("liste_indice_ATMO : %f %f %f %f\n", liste_indice_ATMO[0], liste_indice_ATMO[1], liste_indice_ATMO[2], liste_indice_ATMO[3]);
+        if (liste_indice_ATMO.empty()){
+            date += 24 * 60 * 60;
+            continue;
+        }
+        //printf("liste_indice_ATMO : %f %f %f %f\n", liste_indice_ATMO[0], liste_indice_ATMO[1], liste_indice_ATMO[2], liste_indice_ATMO[3]);
         val_O3 += liste_indice_ATMO[0];
         val_SO2 += liste_indice_ATMO[1];
         val_NO2 += liste_indice_ATMO[2];
         val_PM10 += liste_indice_ATMO[3];
         nb_jour++;
         date += 24 * 60 * 60;
+        empty = 0;
     }
-    val_O3 /= nb_jour;
-    val_SO2 /= nb_jour;
-    val_NO2 /= nb_jour;
-    val_PM10 /= nb_jour;
+
+    if (empty == 1){
+        val_O3 = -1;
+        val_SO2 = -1;
+        val_NO2 = -1;
+        val_PM10 = -1;
+    }
+    else{
+        val_O3 /= nb_jour;
+        val_SO2 /= nb_jour;
+        val_NO2 /= nb_jour;
+        val_PM10 /= nb_jour;
+    }
+
+    printf("liste_indice_ATMO : O3 %f SO2 %f NO2 %f PM10 %f\n", val_O3, val_SO2, val_NO2, val_PM10);
     string qualite_air = calculer_indice_ATMO(val_O3, val_SO2, val_NO2, val_PM10);
     return qualite_air;
 }

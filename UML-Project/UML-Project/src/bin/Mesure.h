@@ -76,6 +76,10 @@ public:
 	void setCapteur(Capteur capteur);
 	// Mode d'emploi : définit le Capteur associé à la mesure
 
+//------------------------------------------------- Surcharge d'opérateurs
+
+	friend ostream & operator<<(ostream & os, const Mesure & mesure);
+
 
 //------------------------------------------------------------------ PRIVE
 private:

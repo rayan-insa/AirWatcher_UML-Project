@@ -238,7 +238,7 @@ vector<Capteur> Model::get_liste_capteurs_fiables(){
     vector<Capteur> liste_capteurs_fiables;
     for (unsigned int i = 0; i < listeCapteurs.size(); i++){
         Capteur capteur = listeCapteurs[i];
-        if (capteur.getDefaillant()){
+        if (capteur.getDefaillant() == 0){
             liste_capteurs_fiables.push_back(capteur);
         }
     }
@@ -250,7 +250,6 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
     // Retourne : un vecteur de capteurs qui contiennent des mesures à la date donnée.
     vector<Capteur> liste_capteurs_date;
     for (unsigned int i = 0; i < listeMesures.size(); i++){
-        printf("date : %ld\n", date);
         Mesure mesure = listeMesures[i];
         if (mesure.getDate() == date && find(liste_capteurs_date.begin(), liste_capteurs_date.end(), mesure.getCapteur()) == liste_capteurs_date.end()){
             liste_capteurs_date.push_back(mesure.getCapteur());
@@ -260,9 +259,27 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
 }
 
 double Model::trouver_distance(long lat1, long lon1, long lat2, long lon2){
-    // Cette fonction permet de calculer la distance entre deux points géographiques. 
-    // Retourne : la distance entre les deux points.
-    return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
+    // Convert the latitudes and longitudes from degrees to radians.
+    lat1 = (double) lat1 * M_PI / 180;
+    lon1 = (double) lon1 * M_PI / 180;
+    lat2 = (double) lat2 * M_PI / 180;
+    lon2 = (double) lon2 * M_PI / 180;
+
+    // Earth's radius in kilometers
+    double R = 6371.0;
+
+    // Calculate the differences between the coordinates
+    double dlat = lat2 - lat1;
+    double dlon = lon2 - lon1;
+
+    // Haversine formula
+    double a = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    // Calculate the distance
+    double distance = R * c;
+
+    return distance;
 }
 
 double Model::getValeurDateType(Capteur capteur, time_t date, string type){
@@ -287,16 +304,23 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
 
     vector<Capteur> liste_capteurs_fiables;
     liste_capteurs_fiables = get_liste_capteurs_fiables();
-    //printf("liste_capteurs_fiables : %ld\n", liste_capteurs_fiables.size());
     vector<Capteur> liste_capteurs_date;
     liste_capteurs_date = get_liste_capteurs_date(date);
-    //printf("liste_capteurs_date : %ld\n", liste_capteurs_date.size());
+    printf("liste_capteurs_date.size() : %ld\n", liste_capteurs_date.size());
+    for(int i = 0; i < (int) liste_capteurs_date.size(); i++){
+        printf("liste_capteurs_date[i].getId() : %s\n", liste_capteurs_date[i].getId().c_str());
+    }
     vector<Capteur> liste_capteurs;
+    //printf("liste_capteurs_fiables.size() : %ld\n", liste_capteurs_fiables.size());
     for (unsigned int i = 0; i < liste_capteurs_fiables.size(); i++){
         if (find(liste_capteurs_date.begin(), liste_capteurs_date.end(), liste_capteurs_fiables[i]) != liste_capteurs_date.end()){
             liste_capteurs.push_back(*(liste_capteurs_fiables.begin() + i));
+            //printf("liste_capteurs[i].getId() : %s\n", liste_capteurs_fiables[i].getId().c_str());
         }
     }
+
+    printf("liste_capteurs.size() : %ld\n", liste_capteurs.size());
+
 
     vector<Capteur> capteurs_proches;
     for (unsigned int i = 0; i < liste_capteurs.size(); i++){
@@ -306,6 +330,7 @@ vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, 
             capteurs_proches.push_back(capteur);
         }
     }
+    printf("capteurs_proches.size() : %ld\n", capteurs_proches.size());
 
     if (capteurs_proches.empty()){
         return vector<double>();
@@ -368,13 +393,29 @@ string Model::getAirQuality(long latitude, long longitude, time_t date_debut, ti
     // Retourne : la qualité de l’air.
     
     //printf("date_debut : %s date_fin : %s latitude : %ld longitude : %ld rayon : %d\n", ctime(&date_debut), ctime(&date_fin), latitude, longitude, rayon);
-    time_t date = date_debut;
+    struct tm* original_timeinfo = localtime(&date_debut);
+    
+    int augmenter = 0;
+    if (original_timeinfo->tm_hour > 12) {
+         augmenter = 1; // Add one day
+    }
+    struct tm* timeinfo = localtime(&date_debut);
+    timeinfo->tm_hour = 12;
+    timeinfo->tm_min = 0;
+    timeinfo->tm_sec = 0;
+    time_t date = mktime(timeinfo);
+    
+    if (augmenter) {
+        date += 24 * 60 * 60; // Add one day
+    }
+    
+    //time_t date = date_debut;
     int nb_jour = 0;
     double val_O3 = 0;
     double val_SO2 = 0;
     double val_NO2 = 0;
     double val_PM10 = 0;
-    while (date != date_fin + 1){
+    while (date < date_fin){
         vector<double> liste_indice_ATMO = getIndiceATMO(latitude, longitude, date, rayon);
         printf("liste_indice_ATMO : %f %f %f %f\n", liste_indice_ATMO[0], liste_indice_ATMO[1], liste_indice_ATMO[2], liste_indice_ATMO[3]);
         val_O3 += liste_indice_ATMO[0];
@@ -382,7 +423,7 @@ string Model::getAirQuality(long latitude, long longitude, time_t date_debut, ti
         val_NO2 += liste_indice_ATMO[2];
         val_PM10 += liste_indice_ATMO[3];
         nb_jour++;
-        date++;
+        date += 24 * 60 * 60;
     }
     val_O3 /= nb_jour;
     val_SO2 /= nb_jour;

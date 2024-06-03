@@ -84,3 +84,11 @@ void Mesure::setValeur(long val) {
 void Mesure::setCapteur(Capteur capt) {
     capteur = capt;
 }
+
+//---------------------------------------------------------- Surcharge d'opérateurs
+
+// Surcharge de l'opérateur <<
+ostream & operator<<(ostream & os, const Mesure & mesure) {
+    os << "Mesure du " << ctime(&mesure.date) << "Type : " << mesure.type_mesure << " Valeur : " << mesure.valeur << " Capteur : " << mesure.capteur.getId();
+    return os;
+}

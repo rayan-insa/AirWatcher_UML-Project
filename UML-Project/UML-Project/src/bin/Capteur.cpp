@@ -104,10 +104,5 @@ Capteur Capteur::findCapteur(string id) {
 
 // Méthode pour comparer deux capteurs
 bool Capteur::operator==(const Capteur& capteur2) const {
-    if (latitude == capteur2.getLatitude() && longitude == capteur2.getLongitude() && defaillant == capteur2.getDefaillant()) {
-        return true;
-    }
-    else{ 
-        return false;
-    }
+    return id == capteur2.getId();
 }

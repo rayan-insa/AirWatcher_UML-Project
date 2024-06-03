@@ -79,6 +79,8 @@ public:
 	Capteur findCapteur(string id);
 	// Mode d'emploi : retourne le capteur correspondant à l'id
 
+	friend ostream & operator<<(ostream & os, const Capteur & capteur);
+
 //------------------------------------------------------------------ PRIVE
 private:
 //----------------------------------------------------- Attributs protégés

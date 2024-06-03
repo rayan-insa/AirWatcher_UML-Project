@@ -448,3 +448,101 @@ string Model::getAirQuality(double latitude, double longitude, time_t date_debut
 }
 
 
+vector<double> Model::getMoyenneMesures(Capteur capteur){
+    // Cette fonction permet de calculer la moyenne des mesures d'un capteur donné.
+    vector<double> moyenne;
+    double moy_O3 = 0;
+    double moy_SO2 = 0;
+    double moy_NO2 = 0;
+    double moy_PM10 = 0;
+    int count_O3 = 0;
+    int count_SO2 = 0;
+    int count_NO2 = 0;
+    int count_PM10 = 0;
+    
+    for (unsigned int i=0; i<listeMesures.size(); i++){
+        if (listeMesures[i].getCapteur() == capteur){
+            if (listeMesures[i].getTypeMesure() == "O3"){
+                moy_O3 += listeMesures[i].getValeur();
+                count_O3++;
+            }
+            else if (listeMesures[i].getTypeMesure() == "SO2"){
+                moy_SO2 += listeMesures[i].getValeur();
+                count_SO2++;
+            }
+            else if (listeMesures[i].getTypeMesure() == "NO2"){
+                moy_NO2 += listeMesures[i].getValeur();
+                count_NO2++;
+            }
+            else if (listeMesures[i].getTypeMesure() == "PM10"){
+                moy_PM10 += listeMesures[i].getValeur();
+                count_PM10++;
+            }
+        }
+    }
+
+    moyenne.push_back(moy_O3 / count_O3);
+    moyenne.push_back(moy_SO2 / count_SO2);
+    moyenne.push_back(moy_NO2 / count_NO2);
+    moyenne.push_back(moy_PM10 / count_PM10);
+
+    return moyenne;
+}
+
+vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence){
+    // Cette fonction permet de définir un capteur comme potentiellement défaillant. 
+    
+    vector<Capteur> capteurs_analyse;
+    vector<Capteur> capteurs_defaillants;
+    vector<Capteur> capteurs_potentiels;
+    for (unsigned int i=0; i<listeCapteurs.size(); i++){
+        Capteur capteur = listeCapteurs[i];
+        if (capteur.getDefaillant() == 0){
+            capteurs_analyse.push_back(capteur);
+        }
+        else if (capteur.getDefaillant() == 1){
+            capteurs_defaillants.push_back(capteur);
+        }
+        else {
+            capteurs_potentiels.push_back(capteur);
+        }
+
+    }
+
+    for (unsigned int i=0; i<capteurs_analyse.size(); i++){
+        Capteur capteur = capteurs_analyse[i];
+        vector<Capteur> capteurs_proximites;
+
+        for (unsigned int j=0; j<listeCapteurs.size(); j++){
+            double calc_distance = trouver_distance(capteur.getLatitude(), capteur.getLongitude(), listeCapteurs[j].getLatitude(), listeCapteurs[j].getLongitude());
+            if (capteur.getId() != listeCapteurs[j].getId() && listeCapteurs[j].getDefaillant() == 0 && calc_distance < distance){
+                capteurs_proximites.push_back(listeCapteurs[j]);
+            }            
+        }
+
+        if (capteurs_proximites.size() != 0) {
+            int count_incoherent = 0;
+            for (unsigned int k=0; k<capteurs_proximites.size(); k++){
+                Capteur capteur2 = capteurs_proximites[k];
+                vector<double> moyenne_mes_capteur = getMoyenneMesures(capteur);
+                vector<double> moyenne_mes_capteur2 = getMoyenneMesures(capteur2);
+
+                for (int l=0; l<4; l++){
+                    if (abs(moyenne_mes_capteur[l] - moyenne_mes_capteur2[l]) > marge_erreur){
+                        count_incoherent ++;
+                    }
+                }
+            }
+
+            if (count_incoherent / capteurs_proximites.size() >= ratio_incoherence){
+                capteurs_potentiels.push_back(capteur);
+                capteur.setDefaillant(-1);
+            }
+
+
+        }
+    }
+
+    vector<vector<Capteur>> liste_capt = {capteurs_defaillants, capteurs_potentiels};
+    return liste_capt;
+}

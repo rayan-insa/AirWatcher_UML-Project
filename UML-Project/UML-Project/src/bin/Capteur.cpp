@@ -106,3 +106,8 @@ Capteur Capteur::findCapteur(string id) {
 bool Capteur::operator==(const Capteur& capteur2) const {
     return id == capteur2.getId();
 }
+
+ostream & operator<<(ostream & os, const Capteur & capteur) {
+    os << "Capteur " << capteur.getId() << " : lat " << capteur.getLatitude() << " - long " << capteur.getLongitude() << " - defaill " << capteur.getDefaillant() << " - user " << capteur.getUser().getLogin();
+    return os;
+}

@@ -94,6 +94,14 @@ public:
     // Mode d'emploi :
     // Cette méthode retourne la qualité de l'air pour une zone donnée et une période donnée.
 
+    vector<double> getMoyenneMesures(Capteur capteur);
+    // Mode d'emploi :
+    // Cette méthode retourne la moyenne des mesures d'un capteur.
+
+    vector<vector<Capteur>> trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence);
+    // Mode d'emploi :
+    // Cette méthode retourne la liste des capteurs potentiellement défaillants.
+
 //-------------------------------------------- Constructeurs - destructeur
 
     Model ( );

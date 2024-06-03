@@ -31,7 +31,7 @@ Capteur::Capteur() {
 }
 
 // Constructeur avec paramètres
-Capteur::Capteur(string id, long lat, long lon, bool def, Utilisateur user) {
+Capteur::Capteur(string id, double lat, double lon, bool def, Utilisateur user) {
     this->id = id;
     latitude = lat;
     longitude = lon;
@@ -59,12 +59,12 @@ Utilisateur Capteur::getUser() const {
 
 
 // Méthode pour obtenir la latitude
-long Capteur::getLatitude() const {
+double Capteur::getLatitude() const {
     return latitude;
 }
 
 // Méthode pour obtenir la longitude
-long Capteur::getLongitude() const {
+double Capteur::getLongitude() const {
     return longitude;
 }
 
@@ -76,12 +76,12 @@ bool Capteur::getDefaillant() const {
 //---------------------------------------------------------- Setters
 
 // Méthode pour définir la latitude
-void Capteur::setLatitude(long lat) {
+void Capteur::setLatitude(double lat) {
     latitude = lat;
 }
 
 // Méthode pour définir la longitude
-void Capteur::setLongitude(long lon) {
+void Capteur::setLongitude(double lon) {
     longitude = lon;
 }
 

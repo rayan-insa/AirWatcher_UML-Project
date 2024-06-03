@@ -74,7 +74,7 @@ public:
     // Mode d'emploi :
     // Cette méthode retourne la liste des capteurs qui possèdent des mesures à une date donnée.
 
-    double trouver_distance(long lat1, long lon1, long lat2, long lon2);
+    double trouver_distance(double lat1, double lon1, double lat2, double lon2);
     // Mode d'emploi :
     // Cette méthode retourne la distance entre deux points géographiques.
 
@@ -86,11 +86,11 @@ public:
     // Mode d'emploi :
     // Cette méthode retourne l'indice ATMO à partir des valeurs de O3, SO2, NO2 et PM10.
     
-    vector<double> getIndiceATMO(long latitude, long longitude, time_t date, int rayon);
+    vector<double> getIndiceATMO(double latitude, double longitude, time_t date, int rayon);
     // Mode d'emploi :
     // Cette méthode retourne l'indice ATMO à une date donnée pour une zone donnée.
 
-    string getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon);
+    string getAirQuality(double latitude, double longitude, time_t date_debut, time_t date_fin, int rayon);
     // Mode d'emploi :
     // Cette méthode retourne la qualité de l'air pour une zone donnée et une période donnée.
 

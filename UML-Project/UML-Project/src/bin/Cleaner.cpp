@@ -27,7 +27,7 @@ using namespace std;
 Cleaner::Cleaner() : id(""), latitude(0), longitude(0), timestamp_start(), timestamp_stop(), fournisseur("") {} //----- Fin de Cleaner
 
 // Constructeur avec paramètres
-Cleaner::Cleaner(const string& id, long latitude, long longitude, const time_t timestamp_start, const time_t timestamp_stop, Fournisseur fournisseur)
+Cleaner::Cleaner(const string& id, double latitude, double longitude, const time_t timestamp_start, const time_t timestamp_stop, Fournisseur fournisseur)
     : id(id), latitude(latitude), longitude(longitude), timestamp_start(timestamp_start), timestamp_stop(timestamp_stop), fournisseur(fournisseur) {} //----- Fin de Cleaner
 
 // Destructeur par défaut
@@ -43,14 +43,14 @@ string Cleaner::getId() const
     return id;
 }
 
-long Cleaner::getLatitude() const 
+double Cleaner::getLatitude() const 
 // Renvoie la latitude du cleaner.
 // Retourne : la latitude du cleaner.
 {
     return latitude;
 }
 
-long Cleaner::getLongitude() const 
+double Cleaner::getLongitude() const 
 // Renvoie la longitude du cleaner.
 // Retourne : la longitude du cleaner.
 {
@@ -86,14 +86,14 @@ void Cleaner::setId(const string& id)
     this->id = id;
 }
 
-void Cleaner::setLatitude(long latitude) 
+void Cleaner::setLatitude(double latitude) 
 // Définit la latitude du cleaner.
 // latitude : la nouvelle latitude du cleaner.
 {
     this->latitude = latitude;
 }
 
-void Cleaner::setLongitude(long longitude) 
+void Cleaner::setLongitude(double longitude) 
 // Définit la longitude du cleaner.
 // longitude : la nouvelle longitude du cleaner.
 {

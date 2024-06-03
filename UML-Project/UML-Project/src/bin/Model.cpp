@@ -97,8 +97,8 @@ Model::Model (  )
 
         if (getline(ss, id, ';') && getline(ss, latitude, ';') && getline(ss, longitude, ';')) {
             
-            long lat = stol(latitude);
-            long lon = stol(longitude);
+            double lat = stod(latitude);
+            double lon = stod(longitude);
             
             bool flag = false;
             for(unsigned int i = 0; i < listeCapteurs.size(); i++) {
@@ -161,8 +161,8 @@ Model::Model (  )
 
         if (getline(ss, id, ';') && getline(ss, latitude, ';') && getline(ss, longitude, ';') && getline(ss, time_stamp_start, ';') && getline(ss, time_stamp_end, ';')){
 
-            long lat = stol(latitude);
-            long lon = stol(longitude);
+            double lat = stod(latitude);
+            double lon = stod(longitude);
             tm tm1={};
             istringstream ss(time_stamp_start);
             ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
@@ -210,7 +210,7 @@ Model::Model (  )
             istringstream ss(date);
             ss >> get_time(&tm1, "%Y-%m-%d %H:%M:%S");
             time_t time = mktime(&tm1);
-            long val = stol(value);
+            double val = stod(value);
             for (unsigned int i=0; i<listeCapteurs.size(); i++) {
                 if (listeCapteurs[i].getId() == sensor) {
                     Mesure mesure = Mesure(time, type, val, listeCapteurs[i]);
@@ -258,12 +258,12 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
     return liste_capteurs_date;
 }
 
-double Model::trouver_distance(long lat1, long lon1, long lat2, long lon2){
+double Model::trouver_distance(double lat1, double lon1, double lat2, double lon2){
     // Convert the latitudes and longitudes from degrees to radians.
-    lat1 = (double) lat1 * M_PI / 180;
-    lon1 = (double) lon1 * M_PI / 180;
-    lat2 = (double) lat2 * M_PI / 180;
-    lon2 = (double) lon2 * M_PI / 180;
+    lat1 = lat1 * M_PI / 180;
+    lon1 = lon1 * M_PI / 180;
+    lat2 = lat2 * M_PI / 180;
+    lon2 = lon2 * M_PI / 180;
 
     // Earth's radius in kilometers
     double R = 6371.0;
@@ -295,7 +295,7 @@ double Model::getValeurDateType(Capteur capteur, time_t date, string type){
 }
 
 
-vector<double> Model::getIndiceATMO(long latitude, long longitude, time_t date, int rayon){
+vector<double> Model::getIndiceATMO(double latitude, double longitude, time_t date, int rayon){
     // Cette fonction permet de donner la moyenne des différents indicateur ATMO à un moment et un temps donné. 
     // Pour ce calcul, l’algorithme choisit parmi les capteurs dignes de confiance et qui contiennent des mesures à la date donnée en paramètre. 
     // Il effectue ensuite une moyenne pondérée de tous les capteurs situés dans un rayon de ”rayon” fois la distance du capteur le plus proche. 
@@ -386,7 +386,7 @@ string Model::calculer_indice_ATMO(double val_O3, double val_SO2, double val_NO2
     }
 }
 
-string Model::getAirQuality(long latitude, long longitude, time_t date_debut, time_t date_fin, int rayon = 0){
+string Model::getAirQuality(double latitude, double longitude, time_t date_debut, time_t date_fin, int rayon = 0){
     // Cette fonction permet de donner la qualité de l’air sur une période donnée sur une zone circulaire donnée. 
     // Elle utilise getIndiceATMO. 
     // Le rayon est initialisé à 0 si l’utilisateur cherche la valeur à un point précis, la date fin est initialisée à date debut si l’utilisateur souhaite la qualité de l’air un jour précis.

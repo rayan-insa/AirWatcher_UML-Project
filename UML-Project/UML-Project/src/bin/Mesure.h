@@ -40,10 +40,10 @@ public:
 	//
 	// Contrat :
 
-	Mesure(time_t date, string type_mesure, long val, Capteur capteur);
+	Mesure(time_t date, string type_mesure, double val, Capteur capteur);
 	// Mode d'emploi : constructeur de Mesure avec paramètres
 	//
-	// Contrat : date est un time_t et val est un long
+	// Contrat : date est un time_t et val est un double
 
 	~Mesure();
 	// Mode d'emploi : destructeur de Mesure
@@ -58,7 +58,7 @@ public:
 	string getTypeMesure() const;
 	// Mode d'emploi : retourne le type de la mesure
 
-	long getValeur() const ;
+	double getValeur() const ;
 	// Mode d'emploi : retourne la valeur de la mesure
 
 	Capteur getCapteur() const;
@@ -70,7 +70,7 @@ public:
 	void setTypeMesure(string type);
 	// Mode d'emploi : définit le type de la mesure
 
-	void setValeur(long val);
+	void setValeur(double val);
 	// Mode d'emploi : définit la valeur de la mesure
 
 	void setCapteur(Capteur capteur);
@@ -88,7 +88,7 @@ private:
 
 	time_t date;
 	string type_mesure;
-	long valeur;
+	double valeur;
 	Capteur capteur;
 
 };

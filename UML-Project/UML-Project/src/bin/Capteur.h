@@ -37,7 +37,7 @@ public:
 	//
 	// Contrat :
 
-	Capteur(string id, long lat, long lon, bool def, Utilisateur user);
+	Capteur(string id, double lat, double lon, bool def, Utilisateur user);
 	// Mode d'emploi : constructeur de Capteur avec paramètres
 	//
 	// Contrat : lat et lon sont des longs et def est un booléen
@@ -55,19 +55,19 @@ public:
 	Utilisateur getUser() const;
 	// Mode d'emploi : retourne l'utilisateur du capteur
 
-	long getLatitude() const;
+	double getLatitude() const;
 	// Mode d'emploi : retourne la latitude du capteur
 
-	long getLongitude() const;
+	double getLongitude() const;
 	// Mode d'emploi : retourne la longitude du capteur
 
 	bool getDefaillant() const;
 	// Mode d'emploi : retourne si le capteur est défaillant ou non
 
-	void setLatitude(long lat);
+	void setLatitude(double lat);
 	// Mode d'emploi : définit la latitude du capteur
 
-	void setLongitude(long lon);
+	void setLongitude(double lon);
 	// Mode d'emploi : définit la longitude du capteur
 
 	void setDefaillant(bool def);
@@ -83,8 +83,8 @@ public:
 private:
 //----------------------------------------------------- Attributs protégés
 	string id;
-	long latitude;
-	long longitude;
+	double latitude;
+	double longitude;
 	bool defaillant;
 	Utilisateur user;
 };

@@ -37,8 +37,8 @@ private:
 
     //----------------------------------------------------- Attributs protégés
     string id;
-    long latitude;
-    long longitude;
+    double latitude;
+    double longitude;
     time_t timestamp_start;
     time_t timestamp_stop;
     Fournisseur fournisseur;
@@ -51,7 +51,7 @@ public:
     Cleaner();
     // Mode d'emploi : constructeur par défaut de Cleaner
 
-    Cleaner(const string& id, long latitude, long longitude, const time_t timestamp_start, const time_t timestamp_stop, Fournisseur fournisseur);
+    Cleaner(const string& id, double latitude, double longitude, const time_t timestamp_start, const time_t timestamp_stop, Fournisseur fournisseur);
     // Mode d'emploi : constructeur paramétré de Cleaner
 
     ~Cleaner();
@@ -64,11 +64,11 @@ public:
     // Mode d'emploi : 
     // Obtient l'id du cleaner
     
-    long getLatitude() const;
+    double getLatitude() const;
     // Mode d'emploi : 
     // Obtient la latitude du cleaner
 
-    long getLongitude() const;
+    double getLongitude() const;
     // Mode d'emploi : 
     // Obtient la longitude du cleaner
 
@@ -89,10 +89,10 @@ public:
     void setId(const string& id);
     // Mode d'emploi :
     // Définit l'id du cleaner
-    void setLatitude(long latitude);
+    void setLatitude(double latitude);
     // Mode d'emploi :
     // Définit la latitude du cleaner
-    void setLongitude(long longitude);
+    void setLongitude(double longitude);
     // Mode d'emploi :
     // Définit la longitude du cleaner
     void setTimestampStart(const time_t timestamp_start);

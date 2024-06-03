@@ -29,7 +29,7 @@ Mesure::Mesure() {
 }
 
 // Constructeur avec paramètres
-Mesure::Mesure(time_t date, string type, long val, Capteur capt) {
+Mesure::Mesure(time_t date, string type, double val, Capteur capt) {
     this->date = date;
     type_mesure = type;
     valeur = val;
@@ -53,7 +53,7 @@ string Mesure::getTypeMesure() const {
 }
 
 // Méthode pour obtenir la valeur de la mesure
-long Mesure::getValeur() const {
+double Mesure::getValeur() const {
     return valeur;
 }
 
@@ -76,7 +76,7 @@ void Mesure::setTypeMesure(string type) {
 }
 
 // Méthode pour définir la valeur de la mesure
-void Mesure::setValeur(long val) {
+void Mesure::setValeur(double val) {
     valeur = val;
 }
 

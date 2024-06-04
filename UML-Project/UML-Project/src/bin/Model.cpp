@@ -510,13 +510,17 @@ vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, d
     }
 
     for (unsigned int i=0; i<capteurs_analyse.size(); i++){
+        //printf("capteurs_analyse : %s\n", capteurs_analyse[i].getId().c_str());
         Capteur capteur = capteurs_analyse[i];
         vector<Capteur> capteurs_proximites;
+        int nb_capteurs_proximites = 0;
 
         for (unsigned int j=0; j<listeCapteurs.size(); j++){
             double calc_distance = trouver_distance(capteur.getLatitude(), capteur.getLongitude(), listeCapteurs[j].getLatitude(), listeCapteurs[j].getLongitude());
+            //printf("calc_distance : %f\n", calc_distance);
             if (capteur.getId() != listeCapteurs[j].getId() && listeCapteurs[j].getDefaillant() == 0 && calc_distance < distance){
                 capteurs_proximites.push_back(listeCapteurs[j]);
+                nb_capteurs_proximites++;
             }            
         }
 
@@ -533,8 +537,8 @@ vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, d
                     }
                 }
             }
-
-            if (count_incoherent / capteurs_proximites.size() >= ratio_incoherence){
+            printf("count_incoherent/nb_capt : %f %f\n", (double)count_incoherent/(double)nb_capteurs_proximites, ratio_incoherence);
+            if (nb_capteurs_proximites != 0 && (double)count_incoherent / (double)nb_capteurs_proximites >= ratio_incoherence){
                 capteurs_potentiels.push_back(capteur);
                 capteur.setDefaillant(-1);
             }

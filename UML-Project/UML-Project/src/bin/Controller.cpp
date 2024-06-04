@@ -84,9 +84,9 @@ void Controller::mainControllerLoop(){
                     texte = "Identifier des capteurs défectueux\r\nPAS ENCORE IMPLEMENTEE\r\n\r\n";
                     this->vue.setTexteVueCourante(texte);
                     this->vue.afficherVueSansEntreeUtilisateur();
-                    long marge_erreur = 1;
-                    long distance = 10;
-                    long ratio_incoherence = 0.2;
+                    double marge_erreur = 20;
+                    double distance = 100;
+                    double ratio_incoherence = 0.4;
                     vector<vector<Capteur>> liste_capteurs = this->model.trouverCapteursDefaillants(marge_erreur, distance, ratio_incoherence);
                     vector<Capteur> liste_capteurs_defectueux = liste_capteurs[0];
                     vector<Capteur> liste_capteurs_potentiellement_defectueux = liste_capteurs[1];

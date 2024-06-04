@@ -11,4 +11,6 @@ int main(){
     Controller controller;
 
     controller.mainControllerLoop();
+
+    return 0;
 }

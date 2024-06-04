@@ -41,6 +41,12 @@ class Model
 public:
 //----------------------------------------------------- Méthodes publiques
 
+    void setGouvernement(const Gouvernement & gouvernement);
+    void setListeParticuliers(const vector<Particulier> & liste);
+    void setListeCapteurs(const vector<Capteur> & liste);
+    void setListeCleaners(const vector<Cleaner> & liste);
+    void setListeFournisseurs(const vector<Fournisseur> & liste);
+    void setListeMesures(const vector<Mesure> & liste);
 
     Gouvernement getGouvernement() const;
     // Mode d'emploi :

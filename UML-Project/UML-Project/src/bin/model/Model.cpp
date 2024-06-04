@@ -20,6 +20,7 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
+#define PI 3.14159265358979323846
 
 using namespace std;
 
@@ -27,6 +28,36 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
+
+void Model::setGouvernement(const Gouvernement & gouvernement)
+{
+    this->gouv = gouvernement;
+}
+
+void Model::setListeParticuliers(const vector<Particulier> & liste)
+{
+    this->listeParticuliers = liste;
+}
+
+void Model::setListeCapteurs(const vector<Capteur> & liste)
+{
+    this->listeCapteurs = liste;
+}
+
+void Model::setListeCleaners(const vector<Cleaner> & liste)
+{
+    this->listeCleaners = liste;
+}
+
+void Model::setListeFournisseurs(const vector<Fournisseur> & liste)
+{
+    this->listeFournisseurs = liste;
+}
+
+void Model::setListeMesures(const vector<Mesure> & liste)
+{
+    this->listeMesures = liste;
+}
 
 Gouvernement Model::getGouvernement() const {
     return gouv;
@@ -260,10 +291,10 @@ vector<Capteur> Model::get_liste_capteurs_date(time_t date){
 
 double Model::trouver_distance(double lat1, double lon1, double lat2, double lon2){
     // Convert the latitudes and longitudes from degrees to radians.
-    lat1 = lat1 * M_PI / 180;
-    lon1 = lon1 * M_PI / 180;
-    lat2 = lat2 * M_PI / 180;
-    lon2 = lon2 * M_PI / 180;
+    lat1 = lat1 * PI / 180;
+    lon1 = lon1 * PI / 180;
+    lat2 = lat2 * PI / 180;
+    lon2 = lon2 * PI / 180;
 
     // Earth's radius in kilometers
     double R = 6371.0;

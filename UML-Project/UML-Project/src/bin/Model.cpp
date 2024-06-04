@@ -537,7 +537,7 @@ vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, d
                     }
                 }
             }
-            printf("count_incoherent/nb_capt : %f %f\n", (double)count_incoherent/(double)nb_capteurs_proximites, ratio_incoherence);
+            //printf("count_incoherent/nb_capt : %f %f\n", (double)count_incoherent/(double)nb_capteurs_proximites, ratio_incoherence);
             if (nb_capteurs_proximites != 0 && (double)count_incoherent / (double)nb_capteurs_proximites >= ratio_incoherence){
                 capteurs_potentiels.push_back(capteur);
                 capteur.setDefaillant(-1);

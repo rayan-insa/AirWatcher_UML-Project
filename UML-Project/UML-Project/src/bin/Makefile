@@ -14,7 +14,18 @@ TARGET = AirWatcher
 SRC_DIRS = metier controller model view
 
 # Source files
-SRCS = $(wildcard $(addsuffix /*.cpp,$(SRC_DIRS))) main.cpp
+SRCS = main.cpp \
+          ./metier/Attribut.cpp \
+          ./metier/Capteur.cpp \
+          ./metier/Cleaner.cpp \
+          ./metier/Fournisseur.cpp \
+          ./metier/Gouvernement.cpp \
+          ./metier/Mesure.cpp \
+          ./metier/Particulier.cpp \
+          ./metier/Utilisateur.cpp \
+          ./controller/Controller.cpp \
+          ./model/Model.cpp \
+          ./view/View.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

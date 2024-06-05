@@ -12,6 +12,7 @@
 
 //-------------------------------------------------------- Include système
 #include <string>
+#include <iostream>
 //------------------------------------------------------ Include personnel
 #include "Particulier.h"
 

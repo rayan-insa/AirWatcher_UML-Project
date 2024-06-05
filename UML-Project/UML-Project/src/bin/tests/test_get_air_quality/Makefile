@@ -1,8 +1,9 @@
 CXX = g++
-CXXFLAGS = -I../../metier -I../../model -I../../controller -I../../view -I../ -std=c++11 
+CXXFLAGS = -I../../metier -I../../model -I../../controller -I../../view -I../ -std=c++11
 
 # Liste des fichiers sources
-SOURCES = un_capteur_defaillant.cpp \
+SOURCES = test_air_quality_case1.cpp \
+          test_air_quality_case2.cpp \
           ../../metier/Attribut.cpp \
           ../../metier/Capteur.cpp \
           ../../metier/Cleaner.cpp \
@@ -19,17 +20,23 @@ SOURCES = un_capteur_defaillant.cpp \
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Nom de l'exécutable
-TARGET = test_capteur_defaillant
+TARGET = test_air_quality
 
 # Règle par défaut
 all: $(TARGET)
-	@echo "Compilation successful. Executable $(TARGET) created."
+    @echo "Compilation successful. Executable $(TARGET) created."
 
 # Règle pour créer l'exécutable
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+    $(CXX) $(CXXFLAGS) -o $@ $^
 
 # Règle pour compiler les fichiers sources en fichiers objets
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+    $(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Règle pour nettoyer les fichiers objets et l'exécutable
+clean:
+    rm -f $(OBJECTS) $(TARGET)
+
+# Phony targets
+.PHONY: all clean

@@ -25,20 +25,28 @@ all: $(TARGET)
 	@$(MAKE) clean_o
 
 # Rule to link object files and create the executable
-$(TARGET): $(OBJS) main.o
+$(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)
 
 # Pattern rule to compile source files into object files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I,$(SRC_DIRS))
 
-# Rule to clean up object files
+# Rule to clean object files
 clean_o:
 ifeq ($(OS),Windows_NT)
-	del /f /q *.o
+	del /f /q metier\Attribut.o metier\Capteur.o metier\Cleaner.o metier\Fournisseur.o metier\Gouvernement.o metier\Mesure.o metier\Particulier.o metier\Utilisateur.o controller\Controller.o model\Model.o view\View.o main.o
 else
-	rm -f *.o
+	rm -f $(OBJS) main.o
+endif
+
+# Rule to clean everything
+clean: clean_o
+ifeq ($(OS),Windows_NT)
+	del /f /q $(TARGET)
+else
+	rm -f $(TARGET)
 endif
 
 # Phony targets
-.PHONY: all clean_o
+.PHONY: all clean_o clean

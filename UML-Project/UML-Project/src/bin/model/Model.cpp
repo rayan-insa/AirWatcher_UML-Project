@@ -520,12 +520,13 @@ vector<double> Model::getMoyenneMesures(Capteur capteur){
     return moyenne;
 }
 
-vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence){
+Data Model::trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence){
     // Cette fonction permet de définir un capteur comme potentiellement défaillant. 
     
     vector<Capteur> capteurs_analyse;
     vector<Capteur> capteurs_defaillants;
     vector<Capteur> capteurs_potentiels;
+    vector<double> ratio_capt_potentiels;
     for (unsigned int i=0; i<listeCapteurs.size(); i++){
         Capteur capteur = listeCapteurs[i];
         if (capteur.getDefaillant() == 0){
@@ -571,6 +572,7 @@ vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, d
             //printf("count_incoherent/nb_capt : %f %f\n", (double)count_incoherent/(double)nb_capteurs_proximites, ratio_incoherence);
             if (nb_capteurs_proximites != 0 && (double)count_incoherent / (double)nb_capteurs_proximites >= ratio_incoherence){
                 capteurs_potentiels.push_back(capteur);
+                ratio_capt_potentiels.push_back((double)count_incoherent / (double)nb_capteurs_proximites);
                 capteur.setDefaillant(-1);
             }
 
@@ -578,6 +580,6 @@ vector<vector<Capteur>> Model::trouverCapteursDefaillants(double marge_erreur, d
         }
     }
 
-    vector<vector<Capteur>> liste_capt = {capteurs_defaillants, capteurs_potentiels};
+    Data liste_capt = {capteurs_defaillants, capteurs_potentiels, ratio_capt_potentiels};
     return liste_capt;
 }

@@ -156,9 +156,10 @@ void Controller::mainControllerLoop(){
                     //double marge_erreur = 20;
                     //double distance = 100;
                     //double ratio_incoherence = 0.4;
-                    vector<vector<Capteur>> liste_capteurs = this->model.trouverCapteursDefaillants(marge_erreur, distance, ratio_incoherence);
-                    vector<Capteur> liste_capteurs_defectueux = liste_capteurs[0];
-                    vector<Capteur> liste_capteurs_potentiellement_defectueux = liste_capteurs[1];
+                    Data liste_capteurs = this->model.trouverCapteursDefaillants(marge_erreur, distance, ratio_incoherence);
+                    vector<Capteur> liste_capteurs_defectueux = liste_capteurs.capteurs_defaillants;
+                    vector<Capteur> liste_capteurs_potentiellement_defectueux = liste_capteurs.capteurs_potentiels;
+                    vector<double> ratio_capt_def = liste_capteurs.ratio_capt_potentiels;
                     cout << "Il y a : " << liste_capteurs_defectueux.size() << " capteurs defaillants" << endl;
                     cout << "Il y a : " << liste_capteurs_potentiellement_defectueux.size() << " capteurs potentiellement defaillants" << endl;
                     while (1){
@@ -185,7 +186,7 @@ void Controller::mainControllerLoop(){
                             this->vue.setTexteVueCourante(texte);
                             this->vue.afficherVueSansEntreeUtilisateur();
                             for (unsigned int i = 0; i < liste_capteurs_potentiellement_defectueux.size(); i++){
-                                cout << liste_capteurs_potentiellement_defectueux[i] << endl;
+                                cout << liste_capteurs_potentiellement_defectueux[i] << "- ratio d'incoherence : " << ratio_capt_def[i] << endl;
                             }
                         }
                     }
@@ -301,9 +302,10 @@ void Controller::mainControllerLoop(){
                     //double marge_erreur = 20;
                     //double distance = 100;
                     //double ratio_incoherence = 0.4;
-                    vector<vector<Capteur>> liste_capteurs = this->model.trouverCapteursDefaillants(marge_erreur, distance, ratio_incoherence);
-                    vector<Capteur> liste_capteurs_defectueux = liste_capteurs[0];
-                    vector<Capteur> liste_capteurs_potentiellement_defectueux = liste_capteurs[1];
+                    Data liste_capteurs = this->model.trouverCapteursDefaillants(marge_erreur, distance, ratio_incoherence);
+                    vector<Capteur> liste_capteurs_defectueux = liste_capteurs.capteurs_defaillants;
+                    vector<Capteur> liste_capteurs_potentiellement_defectueux = liste_capteurs.capteurs_potentiels;
+                    vector<double> ratio_capt_def = liste_capteurs.ratio_capt_potentiels;
                     cout << "Il y a : " << liste_capteurs_defectueux.size() << " capteurs defaillants" << endl;
                     cout << "Il y a : " << liste_capteurs_potentiellement_defectueux.size() << " capteurs potentiellement defaillants" << endl;
                     while (1){
@@ -330,7 +332,7 @@ void Controller::mainControllerLoop(){
                             this->vue.setTexteVueCourante(texte);
                             this->vue.afficherVueSansEntreeUtilisateur();
                             for (unsigned int i = 0; i < liste_capteurs_potentiellement_defectueux.size(); i++){
-                                cout << liste_capteurs_potentiellement_defectueux[i] << endl;
+                                cout << liste_capteurs_potentiellement_defectueux[i] << "- ratio d'incoherence : " << ratio_capt_def[i] << endl;
                             }
                         }
                     }

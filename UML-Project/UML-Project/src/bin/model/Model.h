@@ -34,6 +34,12 @@ using namespace std;
 //
 //------------------------------------------------------------------------
 
+struct Data {
+        vector<Capteur> capteurs_defaillants;
+        vector<Capteur> capteurs_potentiels;
+        vector<double> ratio_capt_potentiels;
+};
+
 class Model
 { 
 //----------------------------------------------------------------- PUBLIC
@@ -104,7 +110,7 @@ public:
     // Mode d'emploi :
     // Cette méthode retourne la moyenne des mesures d'un capteur.
 
-    vector<vector<Capteur>> trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence);
+    Data trouverCapteursDefaillants(double marge_erreur, double distance, double ratio_incoherence);
     // Mode d'emploi :
     // Cette méthode retourne la liste des capteurs potentiellement défaillants.
 
@@ -134,6 +140,8 @@ vector<Capteur> listeCapteurs;
 vector<Cleaner> listeCleaners;
 vector<Fournisseur> listeFournisseurs;
 vector<Mesure> listeMesures;
+
+
 };
 
 #endif // Model_H
